@@ -61,7 +61,7 @@ const projectData = {
   project1: {
     title: "Landing Page Development",
     subtitle: "Initiative 01",
-    images: ["project-1.jpg"],
+    images: ["images/project-1.jpg"],
     overview:
       "Developed and maintained 70+ high-converting landing pages to support student lead generation campaigns. The pages were built with conversion-focused UX, Salesforce form integration, and automated tracking.",
     role:
@@ -93,7 +93,7 @@ project2: {
   project3: {
     title: "AI Chatbot Automation",
     subtitle: "Initiative 03",
-    images: ["project-3.jpg"],
+    images: ["images/project-3.jpg"],
     overview:
       "Implemented a WhatsApp AI Agent automation system using SleekFlow to improve lead engagement, qualification flow, and response efficiency.",
     role:
@@ -107,7 +107,7 @@ project2: {
   project4: {
     title: "Email Automation Integration",
     subtitle: "Initiative 04",
-    images: ["project-4.jpg"],
+    images: ["images/project-4.jpg"],
     overview:
       "Built segmented email marketing workflows with automation and A/B testing to improve nurturing, campaign engagement, and follow-up communication.",
     role:
@@ -121,7 +121,7 @@ project2: {
   project5: {
     title: "Marketing Analytics Infrastructure",
     subtitle: "Initiative 05",
-    images: ["project-5.jpg"],
+    images: ["images/project-5.jpg"],
     overview:
       "Implemented end-to-end marketing tracking infrastructure to improve campaign visibility, attribution accuracy, and reporting clarity.",
     role:
