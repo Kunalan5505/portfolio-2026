@@ -613,18 +613,90 @@ a {
   margin-bottom: 0;
 }
 
-.skills-grid {
+.skills-premium-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 22px;
 }
 
-.skill-item {
-  padding: 18px;
-  text-align: center;
-  font-weight: 700;
+.skill-premium-card {
+  position: relative;
+  overflow: hidden;
+  padding: 28px;
+  border-radius: 26px;
+  min-height: 310px;
+  transition: 0.35s ease;
 }
 
+.skill-premium-card::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  background:
+    radial-gradient(circle at top left, rgba(156, 236, 255, 0.28), transparent 36%),
+    radial-gradient(circle at bottom right, rgba(128, 146, 255, 0.25), transparent 42%);
+  opacity: 0;
+  transition: 0.35s ease;
+  z-index: -1;
+}
+
+.skill-premium-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(156, 236, 255, 0.38);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.45);
+}
+
+.skill-premium-card:hover::before {
+  opacity: 1;
+}
+
+.skill-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+  background: linear-gradient(135deg, rgba(156, 236, 255, 0.25), rgba(128, 146, 255, 0.25));
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 12px 30px rgba(121, 216, 255, 0.12);
+}
+
+.skill-premium-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 10px;
+}
+
+.skill-premium-card p {
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 18px;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin-bottom: 18px;
+}
+
+.skill-tags span {
+  padding: 7px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.075);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  color: #dceaff;
+  font-size: 0.84rem;
+  font-weight: 600;
+}
+
+.skill-premium-card strong {
+  display: block;
+  color: #a9e9ff;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
 .contact-box {
   padding: 34px;
   display: flex;
