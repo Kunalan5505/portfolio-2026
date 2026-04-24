@@ -356,106 +356,156 @@ a {
 
 /* NETFLIX STYLE PROJECT SLIDER */
 
-.slider-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 22px;
-  margin-bottom: 22px;
+.premium-slider-wrap {
+  position: relative;
+  overflow: hidden;
+  padding: 30px 0 55px;
 }
 
-.slider-header p {
+.premium-slider {
+  display: flex;
+  gap: 28px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  padding: 20px 70px 35px;
+  cursor: grab;
+}
+
+.premium-slider:active {
+  cursor: grabbing;
+}
+
+.premium-slider::-webkit-scrollbar {
+  display: none;
+}
+
+.premium-slide {
+  min-width: 520px;
+  height: 620px;
+  position: relative;
+  border-radius: 34px;
+  overflow: hidden;
+  scroll-snap-align: center;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, 0.42);
+  transform: scale(0.88);
+  opacity: 0.55;
+  transition: 0.45s ease;
+  flex-shrink: 0;
+}
+
+.premium-slide.active {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.premium-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.premium-slide::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to top, rgba(4, 10, 24, 0.96) 0%, rgba(4, 10, 24, 0.72) 38%, transparent 72%),
+    linear-gradient(to right, rgba(4, 10, 24, 0.45), transparent);
+}
+
+.premium-content {
+  position: absolute;
+  left: 34px;
+  right: 34px;
+  bottom: 34px;
+  z-index: 2;
+}
+
+.premium-content p {
+  color: #a9e9ff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  margin-bottom: 12px;
+}
+
+.premium-content h3 {
+  font-size: 2rem;
+  line-height: 1.1;
+  margin-bottom: 14px;
+}
+
+.premium-content span {
+  display: block;
   color: var(--muted);
   line-height: 1.7;
+  margin-bottom: 22px;
+  max-width: 430px;
 }
 
-.slider-controls {
-  display: flex;
-  gap: 10px;
-}
-
-.slider-btn {
-  width: 46px;
-  height: 46px;
+.premium-arrow {
+  position: absolute;
+  top: 47%;
+  transform: translateY(-50%);
+  z-index: 10;
+  width: 58px;
+  height: 58px;
   border-radius: 50%;
-  border: 1px solid rgba(255,255,255,0.16);
-  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   color: white;
-  font-size: 2rem;
+  font-size: 2.5rem;
   cursor: pointer;
   transition: 0.25s ease;
 }
 
-.slider-btn:hover {
-  background: rgba(255,255,255,0.16);
-  transform: scale(1.05);
-}
-
-.project-slider {
-  display: flex;
-  gap: 22px;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  padding: 10px 4px 26px;
-  scroll-snap-type: x mandatory;
-}
-
-.project-slider::-webkit-scrollbar {
-  height: 10px;
-}
-
-.project-slider::-webkit-scrollbar-track {
-  background: rgba(255,255,255,0.06);
-  border-radius: 999px;
-}
-
-.project-slider::-webkit-scrollbar-thumb {
+.premium-arrow:hover {
   background: linear-gradient(135deg, #9cecff, #8092ff);
-  border-radius: 999px;
+  color: #081220;
+  transform: translateY(-50%) scale(1.08);
 }
 
-.project-slide {
-  min-width: 430px;
-  overflow: hidden;
-  scroll-snap-align: start;
-  transition: 0.3s ease;
+.premium-arrow.left {
+  left: 8px;
 }
 
-.project-slide:hover {
-  transform: translateY(-8px) scale(1.01);
+.premium-arrow.right {
+  right: 8px;
 }
 
-.project-slide img {
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
-  background: rgba(255,255,255,0.04);
-}
+@media (max-width: 768px) {
+  .premium-slider {
+    padding: 10px 28px 30px;
+    gap: 18px;
+  }
 
-.project-slide-content {
-  padding: 24px;
-}
+  .premium-slide {
+    min-width: 82vw;
+    height: 560px;
+  }
 
-.project-number {
-  color: #a9e9ff;
-  font-size: 0.8rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.16em;
-  margin-bottom: 10px;
-}
+  .premium-content {
+    left: 24px;
+    right: 24px;
+    bottom: 26px;
+  }
 
-.project-slide-content h3 {
-  font-size: 1.45rem;
-  margin-bottom: 12px;
-}
+  .premium-content h3 {
+    font-size: 1.55rem;
+  }
 
-.project-slide-content p {
-  color: var(--muted);
-  line-height: 1.75;
-  margin-bottom: 18px;
+  .premium-arrow {
+    width: 46px;
+    height: 46px;
+    font-size: 2rem;
+  }
 }
-
 /* MODAL */
 
 .modal {
