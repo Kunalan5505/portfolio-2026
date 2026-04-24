@@ -72,18 +72,22 @@ const projectData = {
       "20% improvement in lead capture efficiency and stronger landing page conversion performance."
   },
 
-  project2: {
-    title: "Campaign Management",
-    subtitle: "Initiative 02",
-    images: ["project-2-1.jpg", "project-2-2.jpg", "project-2-3.jpg"],
-    overview:
-      "Managed more than 60 multi-channel advertising campaigns across Google Ads, Meta Ads, LinkedIn Ads, and TikTok Ads. Campaigns were optimized for reach, lead generation, conversion quality, and return on ad spend.",
-    role:
-      "Campaign planning, audience targeting, budget optimization, creative testing, performance monitoring, and reporting.",
-    tools:
-      "Google Ads, Meta Ads, LinkedIn Ads, TikTok Ads, GA4, Google Tag Manager.",
-    result:
-      "18% higher ROAS and 25% increase in qualified student leads."
+project2: {
+  title: "Campaign Management",
+  subtitle: "Initiative 02",
+  images: [
+    "images/project-2-1.jpg",
+    "images/project-2-2.jpg",
+    "images/project-2-3.jpg"
+  ],
+  overview:
+    "Managed more than 60 multi-channel advertising campaigns across Google Ads, Meta Ads, LinkedIn Ads, and TikTok Ads.",
+  role:
+    "Campaign planning, targeting, budget optimization, A/B testing, and performance tracking.",
+  tools:
+    "Google Ads, Meta Ads, LinkedIn Ads, TikTok Ads, GA4, Google Tag Manager.",
+  result:
+    "18% higher ROAS and 25% increase in qualified leads."
   },
 
   project3: {
