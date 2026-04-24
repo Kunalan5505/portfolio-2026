@@ -34,20 +34,103 @@ const slider = document.getElementById("projectSlider");
 const prevBtn = document.getElementById("prevBtn");
 const nextBtn = document.getElementById("nextBtn");
 
+let autoSlide;
+let isDown = false;
+let startX;
+let scrollLeft;
+
+function updateActiveSlide() {
+  const slides = document.querySelectorAll(".premium-slide");
+  const sliderCenter = slider.scrollLeft + slider.offsetWidth / 2;
+
+  slides.forEach((slide) => {
+    const slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
+    const distance = Math.abs(sliderCenter - slideCenter);
+
+    slide.classList.toggle("active", distance < slide.offsetWidth / 2);
+  });
+}
+
+function slideNext() {
+  const slideWidth = slider.querySelector(".premium-slide").offsetWidth + 28;
+
+  if (slider.scrollLeft + slider.offsetWidth >= slider.scrollWidth - 20) {
+    slider.scrollTo({ left: 0, behavior: "smooth" });
+  } else {
+    slider.scrollBy({ left: slideWidth, behavior: "smooth" });
+  }
+
+  setTimeout(updateActiveSlide, 450);
+}
+
+function slidePrev() {
+  const slideWidth = slider.querySelector(".premium-slide").offsetWidth + 28;
+
+  if (slider.scrollLeft <= 20) {
+    slider.scrollTo({ left: slider.scrollWidth, behavior: "smooth" });
+  } else {
+    slider.scrollBy({ left: -slideWidth, behavior: "smooth" });
+  }
+
+  setTimeout(updateActiveSlide, 450);
+}
+
+function startAutoSlide() {
+  autoSlide = setInterval(slideNext, 3500);
+}
+
+function stopAutoSlide() {
+  clearInterval(autoSlide);
+}
+
 if (slider && prevBtn && nextBtn) {
   nextBtn.addEventListener("click", () => {
-    slider.scrollBy({
-      left: 460,
-      behavior: "smooth"
-    });
+    stopAutoSlide();
+    slideNext();
+    startAutoSlide();
   });
 
   prevBtn.addEventListener("click", () => {
-    slider.scrollBy({
-      left: -460,
-      behavior: "smooth"
-    });
+    stopAutoSlide();
+    slidePrev();
+    startAutoSlide();
   });
+
+  slider.addEventListener("scroll", updateActiveSlide);
+
+  slider.addEventListener("mouseenter", stopAutoSlide);
+  slider.addEventListener("mouseleave", startAutoSlide);
+
+  slider.addEventListener("mousedown", (e) => {
+    isDown = true;
+    slider.classList.add("dragging");
+    startX = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+    stopAutoSlide();
+  });
+
+  slider.addEventListener("mouseleave", () => {
+    isDown = false;
+    slider.classList.remove("dragging");
+  });
+
+  slider.addEventListener("mouseup", () => {
+    isDown = false;
+    slider.classList.remove("dragging");
+    startAutoSlide();
+  });
+
+  slider.addEventListener("mousemove", (e) => {
+    if (!isDown) return;
+    e.preventDefault();
+
+    const x = e.pageX - slider.offsetLeft;
+    const walk = (x - startX) * 1.8;
+    slider.scrollLeft = scrollLeft - walk;
+  });
+
+  updateActiveSlide();
+  startAutoSlide();
 }
 
 /* PROJECT MODAL */
