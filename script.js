@@ -66,7 +66,7 @@ function slideNext() {
     slider.scrollBy({ left: moveAmount, behavior: "smooth" });
   }
 
-  setTimeout(updateActiveSlide, 600);
+  setTimeout(updateActiveSlide, 400);
 }
 
 function slidePrev() {
@@ -78,7 +78,7 @@ function slidePrev() {
     slider.scrollBy({ left: -moveAmount, behavior: "smooth" });
   }
 
-  setTimeout(updateActiveSlide, 600);
+  setTimeout(updateActiveSlide, 400);
 }
 
 function startAutoSlide() {
