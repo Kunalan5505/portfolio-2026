@@ -84,7 +84,7 @@ function slidePrev() {
 function startAutoSlide() {
   if (userStoppedAuto) return;
   stopAutoSlide();
-  autoSlide = setInterval(slideNext, 7000);
+  autoSlide = setInterval(slideNext, 5000);
 }
 
 function stopAutoSlide() {
