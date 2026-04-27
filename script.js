@@ -2,9 +2,7 @@ const menuBtn = document.getElementById("menuBtn");
 const navLinks = document.getElementById("navLinks");
 const revealItems = document.querySelectorAll(".reveal");
 
-/* MOBILE MENU */
-
-if (menuBtn && navLinks) {
+if (menuBtn) {
   menuBtn.addEventListener("click", () => {
     navLinks.classList.toggle("show");
   });
@@ -12,13 +10,9 @@ if (menuBtn && navLinks) {
 
 document.querySelectorAll(".nav-links a").forEach((link) => {
   link.addEventListener("click", () => {
-    if (navLinks) {
-      navLinks.classList.remove("show");
-    }
+    navLinks.classList.remove("show");
   });
 });
-
-/* SCROLL REVEAL */
 
 function revealOnScroll() {
   revealItems.forEach((item) => {
@@ -63,7 +57,12 @@ if (themeToggle) {
 
   themeToggle.addEventListener("click", () => {
     const isLight = document.body.classList.contains("light-mode");
-    setTheme(isLight ? "dark" : "light");
+
+    if (isLight) {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
   });
 }
 
@@ -80,33 +79,23 @@ let scrollLeft = 0;
 let userStoppedAuto = false;
 
 function getSlideMoveAmount() {
-  if (!slider) return 0;
-
   const slide = slider.querySelector(".premium-slide");
   const gap = 28;
-
-  if (!slide) return 0;
-
   return slide.offsetWidth + gap;
 }
 
 function updateActiveSlide() {
-  if (!slider) return;
-
   const slides = document.querySelectorAll(".premium-slide");
   const sliderCenter = slider.scrollLeft + slider.offsetWidth / 2;
 
   slides.forEach((slide) => {
     const slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
     const distance = Math.abs(sliderCenter - slideCenter);
-
     slide.classList.toggle("active", distance < slide.offsetWidth / 2);
   });
 }
 
 function slideNext() {
-  if (!slider) return;
-
   const moveAmount = getSlideMoveAmount();
 
   if (slider.scrollLeft + slider.offsetWidth >= slider.scrollWidth - 30) {
@@ -119,8 +108,6 @@ function slideNext() {
 }
 
 function slidePrev() {
-  if (!slider) return;
-
   const moveAmount = getSlideMoveAmount();
 
   if (slider.scrollLeft <= 30) {
@@ -134,7 +121,6 @@ function slidePrev() {
 
 function startAutoSlide() {
   if (userStoppedAuto) return;
-
   stopAutoSlide();
   autoSlide = setInterval(slideNext, 5000);
 }
@@ -184,10 +170,8 @@ if (slider && prevBtn && nextBtn) {
     if (!isDown) return;
 
     e.preventDefault();
-
     const x = e.pageX - slider.offsetLeft;
     const walk = (x - startX) * 1.4;
-
     slider.scrollLeft = scrollLeft - walk;
   });
 
@@ -283,8 +267,6 @@ const projectData = {
 };
 
 function openProjectModal(projectKey) {
-  if (!modal || !modalBody) return;
-
   const project = projectData[projectKey];
 
   if (!project) return;
@@ -307,7 +289,6 @@ function openProjectModal(projectKey) {
     <div class="modal-project">
       <p class="project-number">${project.subtitle}</p>
       <h2>${project.title}</h2>
-
       ${imagesHtml}
 
       <p>${project.overview}</p>
@@ -343,8 +324,6 @@ openModalButtons.forEach((button) => {
 });
 
 function closeModal() {
-  if (!modal) return;
-
   modal.classList.remove("show");
   document.body.classList.remove("modal-open");
 }
