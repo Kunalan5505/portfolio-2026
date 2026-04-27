@@ -28,44 +28,6 @@ function revealOnScroll() {
 window.addEventListener("scroll", revealOnScroll);
 window.addEventListener("load", revealOnScroll);
 
-/* DARK / LIGHT MODE */
-
-const themeToggle = document.getElementById("themeToggle");
-
-function setTheme(mode) {
-  if (!themeToggle) return;
-
-  if (mode === "light") {
-    document.body.classList.add("light-mode");
-    themeToggle.textContent = "🌙";
-    localStorage.setItem("portfolio-theme", "light");
-  } else {
-    document.body.classList.remove("light-mode");
-    themeToggle.textContent = "☀️";
-    localStorage.setItem("portfolio-theme", "dark");
-  }
-}
-
-if (themeToggle) {
-  const savedTheme = localStorage.getItem("portfolio-theme");
-
-  if (savedTheme === "light") {
-    setTheme("light");
-  } else {
-    setTheme("dark");
-  }
-
-  themeToggle.addEventListener("click", () => {
-    const isLight = document.body.classList.contains("light-mode");
-
-    if (isLight) {
-      setTheme("dark");
-    } else {
-      setTheme("light");
-    }
-  });
-}
-
 /* PROJECT SLIDER */
 
 const slider = document.getElementById("projectSlider");
@@ -182,7 +144,6 @@ if (slider && prevBtn && nextBtn) {
   updateActiveSlide();
   startAutoSlide();
 }
-
 /* PROJECT MODAL */
 
 const modal = document.getElementById("projectModal");
@@ -196,7 +157,7 @@ const projectData = {
     subtitle: "Initiative 01",
     images: ["images/project-1.jpg"],
     overview:
-      "Problem: Landing pages needed stronger conversion flow and better lead capture visibility. Action: Developed and maintained 70+ conversion-focused landing pages with Salesforce forms, automated tracking, and CRO-focused UX. Result: Achieved a 20% improvement in lead capture efficiency and stronger landing page performance.",
+      "Developed and maintained 70+ high-converting landing pages to support student lead generation campaigns. The pages were built with conversion-focused UX, Salesforce form integration, and automated tracking.",
     role:
       "Landing page development, UX improvement, Salesforce form integration, tracking setup, and lead capture optimization.",
     tools:
@@ -205,22 +166,22 @@ const projectData = {
       "20% improvement in lead capture efficiency and stronger landing page conversion performance."
   },
 
-  project2: {
-    title: "Campaign Management",
-    subtitle: "Initiative 02",
-    images: [
-      "images/project-2-1.jpg",
-      "images/project-2-2.jpg",
-      "images/project-2-3.jpg"
-    ],
-    overview:
-      "Problem: Campaign performance needed stronger efficiency, clearer targeting, and better budget allocation. Action: Managed more than 60 multi-channel advertising campaigns across Google Ads, Meta Ads, LinkedIn Ads, and TikTok Ads with A/B testing and continuous optimization. Result: Improved ROAS by 17% and increased qualified leads by 25%.",
-    role:
-      "Campaign planning, targeting, budget optimization, A/B testing, and performance tracking.",
-    tools:
-      "Google Ads, Meta Ads, LinkedIn Ads, TikTok Ads, GA4, Google Tag Manager.",
-    result:
-      "17% higher ROAS and 25% increase in qualified leads."
+project2: {
+  title: "Campaign Management",
+  subtitle: "Initiative 02",
+  images: [
+    "images/project-2-1.jpg",
+    "images/project-2-2.jpg",
+    "images/project-2-3.jpg"
+  ],
+  overview:
+    "Managed more than 60 multi-channel advertising campaigns across Google Ads, Meta Ads, LinkedIn Ads, and TikTok Ads.",
+  role:
+    "Campaign planning, targeting, budget optimization, A/B testing, and performance tracking.",
+  tools:
+    "Google Ads, Meta Ads, LinkedIn Ads, TikTok Ads, GA4, Google Tag Manager.",
+  result:
+    "18% higher ROAS and 25% increase in qualified leads."
   },
 
   project3: {
@@ -228,7 +189,7 @@ const projectData = {
     subtitle: "Initiative 03",
     images: ["images/project-3.jpg"],
     overview:
-      "Problem: Lead response and follow-up needed to be faster and more scalable. Action: Implemented a WhatsApp AI Agent automation system using SleekFlow to improve lead engagement, qualification flow, and response efficiency. Result: Increased lead engagement by 30% and reduced manual follow-up effort by 10 hours weekly.",
+      "Implemented a WhatsApp AI Agent automation system using SleekFlow to improve lead engagement, qualification flow, and response efficiency.",
     role:
       "Automation workflow planning, chatbot logic setup, lead response mapping, and performance monitoring.",
     tools:
@@ -242,7 +203,7 @@ const projectData = {
     subtitle: "Initiative 04",
     images: ["images/project-4.jpg"],
     overview:
-      "Problem: Lead nurturing needed stronger segmentation and automated follow-up communication. Action: Built segmented email marketing workflows with automation and A/B testing to improve lifecycle communication and engagement. Result: Improved email open rates by 15% and click-through rates by 10%.",
+      "Built segmented email marketing workflows with automation and A/B testing to improve nurturing, campaign engagement, and follow-up communication.",
     role:
       "Email campaign setup, segmentation, automation planning, content testing, and performance tracking.",
     tools:
@@ -256,7 +217,7 @@ const projectData = {
     subtitle: "Initiative 05",
     images: ["images/project-5.jpg"],
     overview:
-      "Problem: Campaign tracking and attribution visibility needed improvement for better decision-making. Action: Implemented end-to-end tracking infrastructure including GTM, GA4, Meta Pixel, conversion tracking, and reporting structures. Result: Improved attribution accuracy, reporting clarity, and campaign performance decision-making.",
+      "Implemented end-to-end marketing tracking infrastructure to improve campaign visibility, attribution accuracy, and reporting clarity.",
     role:
       "Tracking setup, event configuration, conversion tracking, pixel implementation, and reporting structure.",
     tools:
