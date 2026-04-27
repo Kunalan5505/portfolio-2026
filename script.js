@@ -1,803 +1,368 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+const menuBtn = document.getElementById("menuBtn");
+const navLinks = document.getElementById("navLinks");
+const revealItems = document.querySelectorAll(".reveal");
 
-  <title>KUNALAN MAHENDRAN | Senior Digital Marketing Executive</title>
+/* MOBILE MENU */
 
-  <meta
-    name="description"
-    content="Portfolio of Kunalan Mahendran, Senior Digital Marketing Executive based in Selangor, Malaysia."
-  />
+if (menuBtn && navLinks) {
+  menuBtn.addEventListener("click", () => {
+    navLinks.classList.toggle("show");
+  });
+}
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+document.querySelectorAll(".nav-links a").forEach((link) => {
+  link.addEventListener("click", () => {
+    if (navLinks) {
+      navLinks.classList.remove("show");
+    }
+  });
+});
 
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-    rel="stylesheet"
-  />
+/* SCROLL REVEAL */
 
-  <link rel="stylesheet" href="style.css" />
-</head>
+function revealOnScroll() {
+  revealItems.forEach((item) => {
+    const itemTop = item.getBoundingClientRect().top;
+    const windowHeight = window.innerHeight;
 
-<body>
-  <div class="bg-orb orb-1"></div>
-  <div class="bg-orb orb-2"></div>
-  <div class="bg-orb orb-3"></div>
+    if (itemTop < windowHeight - 80) {
+      item.classList.add("active");
+    }
+  });
+}
 
-  <header class="header">
-    <div class="container">
-      <nav class="navbar glass">
-        <a href="#home" class="logo">KUNALAN</a>
+window.addEventListener("scroll", revealOnScroll);
+window.addEventListener("load", revealOnScroll);
 
-        <div class="nav-links" id="navLinks">
-          <a href="#about">About</a>
-          <a href="#achievements">Achievements</a>
-          <a href="#experience">Experience</a>
-          <a href="#projects">Projects</a>
-          <a href="#skills">Skills</a>
-          <a href="#why-me">Why Me</a>
-          <a href="#testimonials">Testimonials</a>
-          <a href="#education">Education</a>
-          <a href="#contact">Contact</a>
+/* DARK / LIGHT MODE */
+
+const themeToggle = document.getElementById("themeToggle");
+
+function setTheme(mode) {
+  if (!themeToggle) return;
+
+  if (mode === "light") {
+    document.body.classList.add("light-mode");
+    themeToggle.textContent = "🌙";
+    localStorage.setItem("portfolio-theme", "light");
+  } else {
+    document.body.classList.remove("light-mode");
+    themeToggle.textContent = "☀️";
+    localStorage.setItem("portfolio-theme", "dark");
+  }
+}
+
+if (themeToggle) {
+  const savedTheme = localStorage.getItem("portfolio-theme");
+
+  if (savedTheme === "light") {
+    setTheme("light");
+  } else {
+    setTheme("dark");
+  }
+
+  themeToggle.addEventListener("click", () => {
+    const isLight = document.body.classList.contains("light-mode");
+    setTheme(isLight ? "dark" : "light");
+  });
+}
+
+/* PROJECT SLIDER */
+
+const slider = document.getElementById("projectSlider");
+const prevBtn = document.getElementById("prevBtn");
+const nextBtn = document.getElementById("nextBtn");
+
+let autoSlide;
+let isDown = false;
+let startX = 0;
+let scrollLeft = 0;
+let userStoppedAuto = false;
+
+function getSlideMoveAmount() {
+  if (!slider) return 0;
+
+  const slide = slider.querySelector(".premium-slide");
+  const gap = 28;
+
+  if (!slide) return 0;
+
+  return slide.offsetWidth + gap;
+}
+
+function updateActiveSlide() {
+  if (!slider) return;
+
+  const slides = document.querySelectorAll(".premium-slide");
+  const sliderCenter = slider.scrollLeft + slider.offsetWidth / 2;
+
+  slides.forEach((slide) => {
+    const slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
+    const distance = Math.abs(sliderCenter - slideCenter);
+
+    slide.classList.toggle("active", distance < slide.offsetWidth / 2);
+  });
+}
+
+function slideNext() {
+  if (!slider) return;
+
+  const moveAmount = getSlideMoveAmount();
+
+  if (slider.scrollLeft + slider.offsetWidth >= slider.scrollWidth - 30) {
+    slider.scrollTo({ left: 0, behavior: "smooth" });
+  } else {
+    slider.scrollBy({ left: moveAmount, behavior: "smooth" });
+  }
+
+  setTimeout(updateActiveSlide, 400);
+}
+
+function slidePrev() {
+  if (!slider) return;
+
+  const moveAmount = getSlideMoveAmount();
+
+  if (slider.scrollLeft <= 30) {
+    slider.scrollTo({ left: slider.scrollWidth, behavior: "smooth" });
+  } else {
+    slider.scrollBy({ left: -moveAmount, behavior: "smooth" });
+  }
+
+  setTimeout(updateActiveSlide, 400);
+}
+
+function startAutoSlide() {
+  if (userStoppedAuto) return;
+
+  stopAutoSlide();
+  autoSlide = setInterval(slideNext, 5000);
+}
+
+function stopAutoSlide() {
+  clearInterval(autoSlide);
+}
+
+function stopAutoForever() {
+  userStoppedAuto = true;
+  stopAutoSlide();
+}
+
+if (slider && prevBtn && nextBtn) {
+  nextBtn.addEventListener("click", () => {
+    stopAutoForever();
+    slideNext();
+  });
+
+  prevBtn.addEventListener("click", () => {
+    stopAutoForever();
+    slidePrev();
+  });
+
+  slider.addEventListener("scroll", updateActiveSlide);
+
+  slider.addEventListener("mousedown", (e) => {
+    isDown = true;
+    startX = e.pageX - slider.offsetLeft;
+    scrollLeft = slider.scrollLeft;
+    slider.classList.add("dragging");
+    stopAutoForever();
+  });
+
+  slider.addEventListener("mouseup", () => {
+    isDown = false;
+    slider.classList.remove("dragging");
+    updateActiveSlide();
+  });
+
+  slider.addEventListener("mouseleave", () => {
+    isDown = false;
+    slider.classList.remove("dragging");
+  });
+
+  slider.addEventListener("mousemove", (e) => {
+    if (!isDown) return;
+
+    e.preventDefault();
+
+    const x = e.pageX - slider.offsetLeft;
+    const walk = (x - startX) * 1.4;
+
+    slider.scrollLeft = scrollLeft - walk;
+  });
+
+  slider.addEventListener("touchstart", () => {
+    stopAutoForever();
+  });
+
+  updateActiveSlide();
+  startAutoSlide();
+}
+
+/* PROJECT MODAL */
+
+const modal = document.getElementById("projectModal");
+const modalBody = document.getElementById("modalBody");
+const modalClose = document.getElementById("modalClose");
+const openModalButtons = document.querySelectorAll(".open-modal");
+
+const projectData = {
+  project1: {
+    title: "Landing Page Development",
+    subtitle: "Initiative 01",
+    images: ["images/project-1.jpg"],
+    overview:
+      "Problem: Landing pages needed stronger conversion flow and better lead capture visibility. Action: Developed and maintained 70+ conversion-focused landing pages with Salesforce forms, automated tracking, and CRO-focused UX. Result: Achieved a 20% improvement in lead capture efficiency and stronger landing page performance.",
+    role:
+      "Landing page development, UX improvement, Salesforce form integration, tracking setup, and lead capture optimization.",
+    tools:
+      "WordPress, Oxygen, Elementor, Salesforce CRM, Google Tag Manager, GA4.",
+    result:
+      "20% improvement in lead capture efficiency and stronger landing page conversion performance."
+  },
+
+  project2: {
+    title: "Campaign Management",
+    subtitle: "Initiative 02",
+    images: [
+      "images/project-2-1.jpg",
+      "images/project-2-2.jpg",
+      "images/project-2-3.jpg"
+    ],
+    overview:
+      "Problem: Campaign performance needed stronger efficiency, clearer targeting, and better budget allocation. Action: Managed more than 60 multi-channel advertising campaigns across Google Ads, Meta Ads, LinkedIn Ads, and TikTok Ads with A/B testing and continuous optimization. Result: Improved ROAS by 17% and increased qualified leads by 25%.",
+    role:
+      "Campaign planning, targeting, budget optimization, A/B testing, and performance tracking.",
+    tools:
+      "Google Ads, Meta Ads, LinkedIn Ads, TikTok Ads, GA4, Google Tag Manager.",
+    result:
+      "17% higher ROAS and 25% increase in qualified leads."
+  },
+
+  project3: {
+    title: "AI Chatbot Automation",
+    subtitle: "Initiative 03",
+    images: ["images/project-3.jpg"],
+    overview:
+      "Problem: Lead response and follow-up needed to be faster and more scalable. Action: Implemented a WhatsApp AI Agent automation system using SleekFlow to improve lead engagement, qualification flow, and response efficiency. Result: Increased lead engagement by 30% and reduced manual follow-up effort by 10 hours weekly.",
+    role:
+      "Automation workflow planning, chatbot logic setup, lead response mapping, and performance monitoring.",
+    tools:
+      "SleekFlow, WhatsApp automation, AI chatbot workflows.",
+    result:
+      "30% increase in lead engagement and reduced manual follow-up effort by 10 hours weekly."
+  },
+
+  project4: {
+    title: "Email Automation Integration",
+    subtitle: "Initiative 04",
+    images: ["images/project-4.jpg"],
+    overview:
+      "Problem: Lead nurturing needed stronger segmentation and automated follow-up communication. Action: Built segmented email marketing workflows with automation and A/B testing to improve lifecycle communication and engagement. Result: Improved email open rates by 15% and click-through rates by 10%.",
+    role:
+      "Email campaign setup, segmentation, automation planning, content testing, and performance tracking.",
+    tools:
+      "MailerLite, Constant Contact, email automation, A/B testing.",
+    result:
+      "15% higher open rates and 10% higher click-through rates."
+  },
+
+  project5: {
+    title: "Marketing Analytics Infrastructure",
+    subtitle: "Initiative 05",
+    images: ["images/project-5.jpg"],
+    overview:
+      "Problem: Campaign tracking and attribution visibility needed improvement for better decision-making. Action: Implemented end-to-end tracking infrastructure including GTM, GA4, Meta Pixel, conversion tracking, and reporting structures. Result: Improved attribution accuracy, reporting clarity, and campaign performance decision-making.",
+    role:
+      "Tracking setup, event configuration, conversion tracking, pixel implementation, and reporting structure.",
+    tools:
+      "Google Tag Manager, GA4, Meta Pixel, Google Ads Conversion Tracking, Conversion APIs, Google Search Console, Power BI.",
+    result:
+      "Improved attribution accuracy, better decision-making, and clearer campaign performance reporting."
+  }
+};
+
+function openProjectModal(projectKey) {
+  if (!modal || !modalBody) return;
+
+  const project = projectData[projectKey];
+
+  if (!project) return;
+
+  const imagesHtml =
+    project.images.length > 1
+      ? `
+        <div class="modal-gallery">
+          ${project.images
+            .map(
+              (image) =>
+                `<img src="${image}" alt="${project.title} evidence image" />`
+            )
+            .join("")}
+        </div>
+      `
+      : `<img class="modal-image-large" src="${project.images[0]}" alt="${project.title} evidence image" />`;
+
+  modalBody.innerHTML = `
+    <div class="modal-project">
+      <p class="project-number">${project.subtitle}</p>
+      <h2>${project.title}</h2>
+
+      ${imagesHtml}
+
+      <p>${project.overview}</p>
+
+      <div class="modal-info-grid">
+        <div class="modal-info-card">
+          <h4>My Role</h4>
+          <p>${project.role}</p>
         </div>
 
-        <div class="nav-actions">
-          <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark and light mode">
-            ☀️
-          </button>
-
-          <a href="cv.pdf" class="btn btn-primary nav-cv" download>
-            Download CV
-          </a>
-
-          <button class="menu-btn" id="menuBtn" aria-label="Toggle Menu">☰</button>
-        </div>
-      </nav>
-    </div>
-  </header>
-
-  <main id="home">
-    <section class="hero section">
-      <div class="container hero-grid">
-        <div class="hero-left glass reveal">
-          <p class="status-badge">● Open to Opportunities</p>
-
-          <p class="eyebrow">Senior Digital Marketing Executive</p>
-
-          <h1>
-            Driving <span>data-driven growth</span>, through performance marketing.
-          </h1>
-
-          <p class="hero-text">
-            Results-driven Digital Marketing Executive with experience in managing
-            multi-channel campaigns, optimizing conversion funnels, improving lead
-            acquisition, and building scalable marketing systems through analytics,
-            paid media, automation, and CRO.
-          </p>
-
-          <div class="proof-bar">
-            <span>70+ Landing Pages</span>
-            <span>60+ Campaigns</span>
-            <span>+16.9% Lead Growth</span>
-            <span>17% ROAS Improvement</span>
-            <span>30% Higher Engagement</span>
-          </div>
-
-          <div class="hero-buttons">
-            <a href="#projects" class="btn btn-primary">View Projects</a>
-            <a href="#contact" class="btn btn-secondary">Contact Me</a>
-          </div>
-
-          <div class="hero-stats">
-            <div class="stat-card">
-              <h3>+16.9%</h3>
-              <p>Year-over-year lead growth</p>
-            </div>
-
-            <div class="stat-card">
-              <h3>17%</h3>
-              <p>ROAS improvement</p>
-            </div>
-
-            <div class="stat-card">
-              <h3>30%</h3>
-              <p>Lead engagement increase</p>
-            </div>
-          </div>
+        <div class="modal-info-card">
+          <h4>Tools Used</h4>
+          <p>${project.tools}</p>
         </div>
 
-        <div class="hero-right glass reveal">
-          <div class="profile-wrap">
-            <div class="profile-image">
-              <img src="images/profile.jpg" alt="Portrait of Kunalan Mahendran" />
-            </div>
-
-            <div class="profile-content">
-              <h2>KUNALAN MAHENDRAN</h2>
-              <p class="role">Senior Digital Marketing Executive</p>
-
-              <ul class="contact-mini">
-                <li>📞 +6016 250 7723</li>
-                <li>📍 Selangor, Malaysia</li>
-                <li>✉️ kunalan517@gmail.com</li>
-                <li>
-                  🔗
-                  <a href="https://www.linkedin.com/in/kunalan-mahendran/" target="_blank">
-                    LinkedIn Profile
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
+        <div class="modal-info-card">
+          <h4>Result</h4>
+          <p>${project.result}</p>
         </div>
-      </div>
-    </section>
-
-    <section class="section" id="about">
-      <div class="container">
-        <div class="section-title reveal">
-          <p class="eyebrow">Professional Summary</p>
-          <h2>Performance-focused digital marketer with measurable impact.</h2>
-        </div>
-
-        <div class="grid-3">
-          <div class="card glass reveal">
-            <h3>Who I Am</h3>
-            <p>
-              A results-driven digital marketer focused on lead generation,
-              paid media performance, conversion funnel optimization, and
-              data-led campaign decision-making.
-            </p>
-          </div>
-
-          <div class="card glass reveal">
-            <h3>What I Do</h3>
-            <p>
-              I specialize in paid media, marketing automation, analytics setup,
-              landing page optimization, CRO, campaign reporting, and full-funnel
-              digital marketing strategy.
-            </p>
-          </div>
-
-          <div class="card glass reveal">
-            <h3>What I Deliver</h3>
-            <p>
-              I deliver improved lead quality, stronger campaign efficiency,
-              better attribution, higher engagement, and conversion-focused
-              digital marketing systems.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="achievements">
-      <div class="container">
-        <div class="section-title reveal">
-          <p class="eyebrow">Key Achievements</p>
-          <h2>Results backed by optimization, automation, and performance data.</h2>
-        </div>
-
-        <div class="grid-3">
-          <div class="card glass reveal">
-            <h3>Large-Scale Paid Media Management</h3>
-            <p>
-              Managed annual paid media budgets across multiple digital channels
-              with a focus on performance efficiency and lead quality.
-            </p>
-          </div>
-
-          <div class="card glass reveal">
-            <h3>+16.9% Lead Growth</h3>
-            <p>
-              Generated year-over-year lead growth through full-funnel optimization,
-              campaign restructuring, and continuous performance improvement.
-            </p>
-          </div>
-
-          <div class="card glass reveal">
-            <h3>10% Lower CPL</h3>
-            <p>
-              Reduced Cost per Lead by 10% through campaign optimization,
-              budget refinement, and performance-based scaling.
-            </p>
-          </div>
-
-          <div class="card glass reveal">
-            <h3>8% Higher Conversion Rate</h3>
-            <p>
-              Improved conversion rate by 8% through landing page UX testing,
-              CRO improvements, and continuous iteration.
-            </p>
-          </div>
-
-          <div class="card glass reveal">
-            <h3>17% ROAS Improvement</h3>
-            <p>
-              Increased ROAS by 17% through budget reallocation, audience refinement,
-              and campaign performance scaling.
-            </p>
-          </div>
-
-          <div class="card glass reveal">
-            <h3>30% Higher Lead Engagement</h3>
-            <p>
-              Improved lead engagement by 30% using automation, AI workflows,
-              and faster lead response systems.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="experience">
-      <div class="container">
-        <div class="section-title reveal">
-          <p class="eyebrow">Professional Experience</p>
-          <h2>My digital marketing journey.</h2>
-        </div>
-
-        <div class="timeline">
-          <div class="timeline-item glass reveal">
-            <h3>Senior Digital Marketing Executive</h3>
-            <h4>Cyberjaya Education Group | Cyberjaya, Selangor</h4>
-            <span>October 2024 - Present</span>
-
-            <ul>
-              <li>
-                Designed and optimized full-funnel digital marketing strategies
-                from awareness to consideration to conversion across Google Ads,
-                Meta Ads, and TikTok Ads to maximize student acquisition and lead quality.
-              </li>
-              <li>
-                Developed and maintained high-converting landing pages, integrating
-                Salesforce forms and automated tracking.
-              </li>
-              <li>
-                Optimized and scaled multi-channel campaigns based on performance data,
-                ROI signals, and audience segmentation strategies.
-              </li>
-              <li>
-                Implemented marketing automation systems, including a WhatsApp AI agent
-                using SleekFlow and workflow automation, increasing engagement by 30%.
-              </li>
-              <li>
-                Developed email automation workflows using Constant Contact integrated
-                with Salesforce forms to streamline lead nurturing and lifecycle communication.
-              </li>
-              <li>
-                Developed website and landing page solutions focusing on UX, frontend
-                implementation, and backend form integrations using WordPress and related tools.
-              </li>
-              <li>
-                Monitored campaign performance and delivered monthly analytics reports,
-                translating data into actionable insights for strategic decision-making.
-              </li>
-            </ul>
-          </div>
-
-          <div class="timeline-item glass reveal">
-            <h3>Digital Marketing Executive</h3>
-            <h4>Iklim Prima Sdn Bhd | Petaling Jaya, Selangor</h4>
-            <span>April 2023 - October 2024</span>
-
-            <ul>
-              <li>
-                Executed SEO strategies that increased organic traffic by 20%
-                through keyword optimization, content improvement, and search visibility efforts.
-              </li>
-              <li>
-                Managed email marketing campaigns with automation, segmentation,
-                and A/B testing to improve customer communication.
-              </li>
-              <li>
-                Improved email open rates by 15% and click-through rates by 10%
-                through subject line testing, segmentation, and content refinement.
-              </li>
-              <li>
-                Ran social media campaigns that improved engagement by 25%
-                and strengthened brand visibility.
-              </li>
-              <li>
-                Designed digital assets, marketing visuals, and campaign content
-                to support promotional activities.
-              </li>
-            </ul>
-          </div>
-
-          <div class="timeline-item glass reveal">
-            <h3>Digital Marketing Junior Executive</h3>
-            <h4>Shimlen Sdn Bhd | Kajang, Selangor</h4>
-            <span>March 2020 - February 2021</span>
-
-            <ul>
-              <li>
-                Managed Meta Ads campaigns and improved reach and engagement by 15%
-                through campaign setup, creative testing, and audience optimization.
-              </li>
-              <li>
-                Used Google Analytics to evaluate campaign performance and improve ROI
-                through data-backed optimization.
-              </li>
-              <li>
-                Created website content, marketing materials, and promotional graphics
-                to support brand and campaign initiatives.
-              </li>
-              <li>
-                Supported digital marketing campaign setup, execution, tracking,
-                and reporting.
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="projects">
-      <div class="container">
-        <div class="section-title reveal">
-          <p class="eyebrow">Projects / Case Studies</p>
-          <h2>Key digital marketing initiatives with visible work evidence.</h2>
-        </div>
-
-        <div class="premium-slider-wrap reveal">
-          <button class="premium-arrow left" id="prevBtn">‹</button>
-
-          <div class="premium-slider" id="projectSlider">
-            <article class="premium-slide active">
-              <img src="images/project-1.jpg" alt="Landing Page Development preview" />
-              <div class="premium-content">
-                <p>Landing Page Initiative</p>
-                <h3>Landing Page Development</h3>
-                <span>
-                  Conversion-focused landing pages with Salesforce forms,
-                  automated tracking, and CRO-focused UX.
-                </span>
-                <button class="btn btn-primary open-modal" data-project="project1">
-                  View Details
-                </button>
-              </div>
-            </article>
-
-            <article class="premium-slide">
-              <img src="images/project-2-1.jpg" alt="Campaign Management preview" />
-              <div class="premium-content">
-                <p>Performance Marketing Initiative</p>
-                <h3>Campaign Management</h3>
-                <span>
-                  Multi-channel campaign management across Google, Meta,
-                  LinkedIn, and TikTok Ads.
-                </span>
-                <button class="btn btn-primary open-modal" data-project="project2">
-                  View Details
-                </button>
-              </div>
-            </article>
-
-            <article class="premium-slide">
-              <img src="images/project-3.jpg" alt="AI Chatbot Automation preview" />
-              <div class="premium-content">
-                <p>Automation Initiative</p>
-                <h3>AI Chatbot Automation</h3>
-                <span>
-                  WhatsApp AI Agent automation using SleekFlow to improve
-                  lead engagement and response flow.
-                </span>
-                <button class="btn btn-primary open-modal" data-project="project3">
-                  View Details
-                </button>
-              </div>
-            </article>
-
-            <article class="premium-slide">
-              <img src="images/project-4.jpg" alt="Email Automation Integration preview" />
-              <div class="premium-content">
-                <p>Email Marketing Initiative</p>
-                <h3>Email Automation Integration</h3>
-                <span>
-                  Email workflows, segmentation, automation, and A/B testing
-                  to support lifecycle communication.
-                </span>
-                <button class="btn btn-primary open-modal" data-project="project4">
-                  View Details
-                </button>
-              </div>
-            </article>
-
-            <article class="premium-slide">
-              <img src="images/project-5.jpg" alt="Marketing Analytics Infrastructure preview" />
-              <div class="premium-content">
-                <p>Analytics Initiative</p>
-                <h3>Marketing Analytics Infrastructure</h3>
-                <span>
-                  GTM, GA4, Meta Pixel, Conversion API, and reporting setup
-                  for better attribution visibility.
-                </span>
-                <button class="btn btn-primary open-modal" data-project="project5">
-                  View Details
-                </button>
-              </div>
-            </article>
-          </div>
-
-          <button class="premium-arrow right" id="nextBtn">›</button>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="skills">
-      <div class="container">
-        <div class="section-title reveal">
-          <p class="eyebrow">Technical Skills</p>
-          <h2>Tools and platforms I use to drive measurable growth.</h2>
-        </div>
-
-        <div class="skills-premium-grid">
-          <div class="skill-premium-card glass reveal">
-            <div class="skill-icon">🎯</div>
-            <h3>Paid Media & Campaigns</h3>
-            <p>Managing performance campaigns across multiple advertising channels.</p>
-            <div class="skill-tags">
-              <span>Google Ads</span>
-              <span>Meta Ads</span>
-              <span>LinkedIn Ads</span>
-              <span>TikTok Ads</span>
-            </div>
-            <strong>Improved ROAS by 17% through performance scaling.</strong>
-          </div>
-
-          <div class="skill-premium-card glass reveal">
-            <div class="skill-icon">📊</div>
-            <h3>Analytics & Tracking</h3>
-            <p>Building tracking systems for clearer attribution and reporting.</p>
-            <div class="skill-tags">
-              <span>GA4</span>
-              <span>Google Tag Manager</span>
-              <span>Meta Pixel</span>
-              <span>Conversion API</span>
-              <span>Power BI</span>
-            </div>
-            <strong>Improved campaign visibility and attribution accuracy.</strong>
-          </div>
-
-          <div class="skill-premium-card glass reveal">
-            <div class="skill-icon">🤖</div>
-            <h3>Automation & CRM</h3>
-            <p>Automating lead engagement and improving follow-up efficiency.</p>
-            <div class="skill-tags">
-              <span>Salesforce CRM</span>
-              <span>SleekFlow</span>
-              <span>WhatsApp AI</span>
-              <span>Email Automation</span>
-            </div>
-            <strong>Increased lead engagement by 30%.</strong>
-          </div>
-
-          <div class="skill-premium-card glass reveal">
-            <div class="skill-icon">🌐</div>
-            <h3>Web & Landing Pages</h3>
-            <p>Developing conversion-focused landing pages and website experiences.</p>
-            <div class="skill-tags">
-              <span>WordPress</span>
-              <span>Oxygen</span>
-              <span>Elementor</span>
-              <span>CRO</span>
-            </div>
-            <strong>Improved conversion rate by 8% through UX testing.</strong>
-          </div>
-
-          <div class="skill-premium-card glass reveal">
-            <div class="skill-icon">🔍</div>
-            <h3>SEO & Search Visibility</h3>
-            <p>Improving organic visibility through keyword and on-page optimization.</p>
-            <div class="skill-tags">
-              <span>SEO</span>
-              <span>SEM</span>
-              <span>Search Console</span>
-              <span>Keyword Research</span>
-            </div>
-            <strong>Increased organic traffic by 20%.</strong>
-          </div>
-
-          <div class="skill-premium-card glass reveal">
-            <div class="skill-icon">✨</div>
-            <h3>Creative, AI & Reporting</h3>
-            <p>Producing campaign assets, improving workflows, and building reports.</p>
-            <div class="skill-tags">
-              <span>Canva</span>
-              <span>ChatGPT</span>
-              <span>Hotjar</span>
-              <span>Excel</span>
-              <span>Power BI</span>
-            </div>
-            <strong>Supported performance-focused digital campaign execution.</strong>
-          </div>
-        </div>
-
-        <div class="tool-logo-section reveal">
-          <h3>Platforms & Tools</h3>
-
-          <div class="tools-carousel">
-            <div class="tools-track">
-              <div class="tool-logo-card glass">
-                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/googleads.svg" alt="Google Ads" />
-                <span>Google Ads</span>
-              </div>
-
-              <div class="tool-logo-card glass">
-                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/googleanalytics.svg" alt="GA4" />
-                <span>GA4</span>
-              </div>
-
-              <div class="tool-logo-card glass">
-                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/googletagmanager.svg" alt="Google Tag Manager" />
-                <span>GTM</span>
-              </div>
-
-              <div class="tool-logo-card glass">
-                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/meta.svg" alt="Meta Ads" />
-                <span>Meta Ads</span>
-              </div>
-
-              <div class="tool-logo-card glass">
-                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/tiktok.svg" alt="TikTok Ads" />
-                <span>TikTok Ads</span>
-              </div>
-
-              <div class="tool-logo-card glass">
-                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/linkedin.svg" alt="LinkedIn Ads" />
-                <span>LinkedIn Ads</span>
-              </div>
-
-              <div class="tool-logo-card glass">
-                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/salesforce.svg" alt="Salesforce" />
-                <span>Salesforce</span>
-              </div>
-
-              <div class="tool-logo-card glass">
-                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/canva.svg" alt="Canva" />
-                <span>Canva</span>
-              </div>
-
-              <div class="tool-logo-card glass">
-                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/openai.svg" alt="ChatGPT" />
-                <span>ChatGPT</span>
-              </div>
-
-              <div class="tool-logo-card glass">
-                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/hotjar.svg" alt="Hotjar" />
-                <span>Hotjar</span>
-              </div>
-
-              <div class="tool-logo-card glass">
-                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/googlesearchconsole.svg" alt="Google Search Console" />
-                <span>Search Console</span>
-              </div>
-
-              <div class="tool-logo-card glass">
-                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/microsoftexcel.svg" alt="Microsoft Excel" />
-                <span>Microsoft Excel</span>
-              </div>
-
-              <div class="tool-logo-card glass">
-                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/powerbi.svg" alt="Power BI" />
-                <span>Power BI</span>
-              </div>
-
-              <div class="tool-logo-card glass">
-                <img src="images/sleekflow.png" alt="SleekFlow" />
-                <span>SleekFlow</span>
-              </div>
-
-              <div class="tool-logo-card glass">
-                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/googleads.svg" alt="Google Ads" />
-                <span>Google Ads</span>
-              </div>
-
-              <div class="tool-logo-card glass">
-                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/googleanalytics.svg" alt="GA4" />
-                <span>GA4</span>
-              </div>
-
-              <div class="tool-logo-card glass">
-                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/googletagmanager.svg" alt="Google Tag Manager" />
-                <span>GTM</span>
-              </div>
-
-              <div class="tool-logo-card glass">
-                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/meta.svg" alt="Meta Ads" />
-                <span>Meta Ads</span>
-              </div>
-
-              <div class="tool-logo-card glass">
-                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/tiktok.svg" alt="TikTok Ads" />
-                <span>TikTok Ads</span>
-              </div>
-
-              <div class="tool-logo-card glass">
-                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/linkedin.svg" alt="LinkedIn Ads" />
-                <span>LinkedIn Ads</span>
-              </div>
-
-              <div class="tool-logo-card glass">
-                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/openai.svg" alt="ChatGPT" />
-                <span>ChatGPT</span>
-              </div>
-
-              <div class="tool-logo-card glass">
-                <img src="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/powerbi.svg" alt="Power BI" />
-                <span>Power BI</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="why-me">
-      <div class="container">
-        <div class="section-title reveal">
-          <p class="eyebrow">Why Work With Me</p>
-          <h2>Strategy, execution, and reporting built around measurable growth.</h2>
-        </div>
-
-        <div class="grid-3">
-          <div class="card glass reveal">
-            <h3>Performance Mindset</h3>
-            <p>
-              I focus on growth metrics that matter, including lead quality,
-              ROAS, CPL, conversion rate, and campaign efficiency.
-            </p>
-          </div>
-
-          <div class="card glass reveal">
-            <h3>Tracking-First Approach</h3>
-            <p>
-              I build cleaner analytics, tagging, attribution, and reporting systems
-              so decisions are based on reliable performance data.
-            </p>
-          </div>
-
-          <div class="card glass reveal">
-            <h3>Hands-On Execution</h3>
-            <p>
-              I can manage ads, landing pages, CRM forms, automation workflows,
-              reporting dashboards, and campaign optimization directly.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="testimonials">
-      <div class="container">
-        <div class="section-title reveal">
-          <p class="eyebrow">Testimonials</p>
-          <h2>Recommendations from people I’ve worked with.</h2>
-        </div>
-
-        <div class="testimonial-grid">
-          <div class="testimonial-card glass reveal">
-            <div class="testimonial-head">
-              <img src="images/testimonial-1.jpg" alt="Shahman Zainuddin LinkedIn profile" />
-              <div>
-                <h4>Shahman Zainuddin</h4>
-                <span>Full-stack Digital Marketer & Data Analyst</span>
-              </div>
-            </div>
-
-            <p>
-              “Working with Kunalan has been a great experience. He really knows his stuff
-              when it comes to digital marketing, especially in managing leads through Meta
-              and Google. His reporting and analysis are always on point, with clear dashboards
-              that make the data easy to follow. Kunalan’s also a solid team player, easy to
-              work with, reliable, and able to manage multiple tasks efficiently.”
-            </p>
-          </div>
-
-          <div class="testimonial-card glass reveal">
-            <div class="testimonial-head">
-              <img src="images/testimonial-2.jpg" alt="Dhivia Varm Naidu LinkedIn profile" />
-              <div>
-                <h4>Dhivia Varm Naidu Damodara Naidu</h4>
-                <span>Senior Auditor</span>
-              </div>
-            </div>
-
-            <p>
-              “Great skill set in terms of graphic work, which added value to the department
-              in terms of building a dashboard using Power BI tool.”
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="education">
-      <div class="container">
-        <div class="section-title reveal">
-          <p class="eyebrow">Education & Certifications</p>
-          <h2>Academic background and certifications.</h2>
-        </div>
-
-        <div class="grid-3">
-          <div class="card glass reveal">
-            <h3>Education</h3>
-            <p><strong>Bachelor in International Business (Hons)</strong></p>
-            <p>Management and Science University</p>
-            <br />
-            <p><strong>Diploma in Management</strong></p>
-            <p>Management and Science University</p>
-          </div>
-
-          <div class="card glass reveal">
-            <h3>Certifications</h3>
-            <p>Google Ads Search Certification</p>
-            <p>Google Digital Academy / Skillshop</p>
-            <br />
-            <p>The Fundamentals of Digital Marketing</p>
-            <p>Google Digital Garage</p>
-            <br />
-            <p>Social Media Marketing</p>
-            <p>HRDCorp</p>
-          </div>
-
-          <div class="card glass reveal">
-            <h3>Languages</h3>
-            <p>English – Professional Proficiency</p>
-            <p>Malay – Conversational Proficiency</p>
-            <p>Tamil – Professional Proficiency</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="contact">
-      <div class="container">
-        <div class="contact-box glass reveal">
-          <div>
-            <p class="eyebrow">Contact</p>
-            <h2>Let’s connect and build growth-focused campaigns.</h2>
-            <p>
-              I’m open to digital marketing opportunities, collaborations,
-              and professional networking.
-            </p>
-          </div>
-
-          <div class="contact-actions">
-            <a href="mailto:kunalan517@gmail.com" class="btn btn-primary">Email Me</a>
-            <a
-              href="https://www.linkedin.com/in/kunalan-mahendran/"
-              target="_blank"
-              class="btn btn-secondary"
-            >
-              LinkedIn
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <div class="modal" id="projectModal">
-    <div class="modal-content glass">
-      <button class="modal-close" id="modalClose">×</button>
-      <div id="modalBody"></div>
-    </div>
-  </div>
-
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-box glass">
-        <p>© 2026 KUNALAN MAHENDRAN. All rights reserved.</p>
-        <p>Senior Digital Marketing Executive | Selangor, Malaysia</p>
       </div>
     </div>
-  </footer>
+  `;
 
-  <script src="script.js"></script>
-</body>
-</html>
+  modal.classList.add("show");
+  document.body.classList.add("modal-open");
+}
+
+openModalButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const projectKey = button.getAttribute("data-project");
+    openProjectModal(projectKey);
+  });
+});
+
+function closeModal() {
+  if (!modal) return;
+
+  modal.classList.remove("show");
+  document.body.classList.remove("modal-open");
+}
+
+if (modalClose) {
+  modalClose.addEventListener("click", closeModal);
+}
+
+if (modal) {
+  modal.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      closeModal();
+    }
+  });
+}
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    closeModal();
+  }
+});
