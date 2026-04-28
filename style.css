@@ -338,53 +338,69 @@ a {
   overflow: hidden;
   height: 260px;
   border-radius: 28px;
-  background: #ffffff;
-  border: 1px solid rgba(255,255,255,0.16);
-  box-shadow: 0 24px 70px rgba(0,0,0,0.22);
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
+
+  /* 🔥 GLASS EFFECT */
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+
+  transition: all 0.35s ease;
 }
 
 .institution-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 30px 90px rgba(121, 216, 255, 0.18);
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(156, 236, 255, 0.35);
+  box-shadow: 0 40px 120px rgba(121, 216, 255, 0.18);
 }
 
+/* IMAGE */
 .institution-card img {
   width: 100%;
-  height: 72%;
+  height: 70%;
   object-fit: contain;
   padding: 28px;
-  background: #ffffff;
-  opacity: 1;
-  filter: none;
+
+  /* make logo pop on glass */
+  filter: brightness(1.1) contrast(1.1);
 }
 
-.institution-card::after {
-  content: none;
-}
-
+/* TEXT */
 .institution-card span {
   position: absolute;
-  left: 18px;
-  right: 18px;
-  bottom: 18px;
-  z-index: 2;
-  color: #06111f;
+  left: 20px;
+  right: 20px;
+  bottom: 20px;
+
   font-size: 0.95rem;
-  font-weight: 900;
-  line-height: 1.15;
+  font-weight: 800;
+  color: #e9f4ff;
 }
 
-@media (max-width: 1100px) {
-  .institution-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
+/* ✨ TOP LIGHT EFFECT */
+.institution-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
 
-@media (max-width: 700px) {
-  .institution-grid {
-    grid-template-columns: repeat(1, 1fr);
-  }
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.6),
+    transparent 30%,
+    rgba(121,216,255,0.25)
+  );
+
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+
+  pointer-events: none;
 }
 
 .timeline-item { padding: 28px; }
