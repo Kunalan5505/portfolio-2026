@@ -327,19 +327,27 @@ a {
 }
 
 /* INSTITUTIONS */
+/* spacing */
+.section-heading {
+  margin-top: 10px;
+  margin-bottom: 50px;
+}
+
+/* grid */
 .institution-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: 20px;
 }
 
+/* card */
 .institution-card {
   position: relative;
   overflow: hidden;
   height: 260px;
   border-radius: 28px;
 
-  /* 🔥 GLASS EFFECT */
+  /* 🔥 GLASS */
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
@@ -351,24 +359,25 @@ a {
   transition: all 0.35s ease;
 }
 
+/* hover */
 .institution-card:hover {
   transform: translateY(-8px) scale(1.02);
-  border-color: rgba(156, 236, 255, 0.35);
+  border-color: rgba(156, 236, 255, 0.4);
   box-shadow: 0 40px 120px rgba(121, 216, 255, 0.18);
 }
 
-/* IMAGE */
+/* logo */
 .institution-card img {
   width: 100%;
   height: 70%;
   object-fit: contain;
-  padding: 28px;
+  padding: 30px;
 
-  /* make logo pop on glass */
-  filter: brightness(1.1) contrast(1.1);
+  /* 🔥 FIX VISIBILITY */
+  filter: brightness(1.8) contrast(1.3);
 }
 
-/* TEXT */
+/* title */
 .institution-card span {
   position: absolute;
   left: 20px;
@@ -380,7 +389,7 @@ a {
   color: #e9f4ff;
 }
 
-/* ✨ TOP LIGHT EFFECT */
+/* ✨ premium border glow */
 .institution-card::before {
   content: "";
   position: absolute;
@@ -390,7 +399,7 @@ a {
 
   background: linear-gradient(
     135deg,
-    rgba(255,255,255,0.6),
+    rgba(255,255,255,0.5),
     transparent 30%,
     rgba(121,216,255,0.25)
   );
@@ -401,6 +410,19 @@ a {
   -webkit-mask-composite: xor;
 
   pointer-events: none;
+}
+
+/* responsive */
+@media (max-width: 1100px) {
+  .institution-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .institution-grid {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
 .timeline-item { padding: 28px; }
