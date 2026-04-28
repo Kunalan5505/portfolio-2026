@@ -350,6 +350,15 @@ a {
   animation-play-state: paused;
 }
 
+.managed-carousel {
+  overflow-x: auto;
+  scroll-behavior: smooth;
+}
+
+.managed-carousel::-webkit-scrollbar {
+  display: none;
+}
+
 .managed-site-card {
   min-width: 320px;
   max-width: 320px;
