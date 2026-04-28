@@ -28,6 +28,45 @@ function revealOnScroll() {
 window.addEventListener("scroll", revealOnScroll);
 window.addEventListener("load", revealOnScroll);
 
+const carousel = document.getElementById("managedCarousel");
+const track = carousel.querySelector(".managed-carousel-track");
+
+let isDown = false;
+let startX;
+let scrollLeft;
+
+carousel.addEventListener("mousedown", (e) => {
+  isDown = true;
+  carousel.classList.add("active");
+  startX = e.pageX - carousel.offsetLeft;
+  scrollLeft = carousel.scrollLeft;
+
+  // stop auto scroll when user interacts
+  track.style.animationPlayState = "paused";
+});
+
+carousel.addEventListener("mouseleave", () => {
+  isDown = false;
+  carousel.classList.remove("active");
+});
+
+carousel.addEventListener("mouseup", () => {
+  isDown = false;
+  carousel.classList.remove("active");
+
+  // resume auto scroll after interaction
+  track.style.animationPlayState = "running";
+});
+
+carousel.addEventListener("mousemove", (e) => {
+  if (!isDown) return;
+  e.preventDefault();
+
+  const x = e.pageX - carousel.offsetLeft;
+  const walk = (x - startX) * 1.5; // speed
+  carousel.scrollLeft = scrollLeft - walk;
+});
+
 /* PROJECT SLIDER */
 
 const slider = document.getElementById("projectSlider");
