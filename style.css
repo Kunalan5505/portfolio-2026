@@ -907,22 +907,6 @@ a {
   padding: 50px 0;
 }
 
-.tools-ecosystem::before {
-  content: "";
-  position: absolute;
-  width: 520px;
-  height: 520px;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle, rgba(121,216,255,0.25), transparent 55%),
-    radial-gradient(circle, rgba(123,140,255,0.25), transparent 70%);
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  filter: blur(35px);
-  z-index: 1;
-}
-
 .tools-center-orb {
   position: absolute;
   z-index: 6;
@@ -932,8 +916,12 @@ a {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  display: grid;
-  place-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 28px;
   text-align: center;
   background: linear-gradient(145deg, #171c2e, #050814);
   border: 1px solid rgba(255,255,255,0.16);
@@ -941,7 +929,25 @@ a {
 }
 
 .orb-icon {
-  font-size: 2rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  font-size: 1.6rem;
+  background: rgba(255,255,255,0.08);
+}
+
+.tools-center-orb h3 {
+  font-size: 1.05rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.tools-center-orb p {
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin: 0;
 }
 
 .tools-row {
@@ -952,7 +958,6 @@ a {
   display: flex;
   gap: 16px;
   width: max-content;
-  will-change: transform;
   transform: translate3d(0,0,0);
 }
 
@@ -998,6 +1003,15 @@ a {
   background: #001e36;
   border: 1px solid #31a8ff;
   color: #31a8ff;
+}
+
+.gpt-letter {
+  background: #10a37f;
+}
+
+.bi-letter {
+  background: #f2c811;
+  color: #111;
 }
 
 @keyframes scrollLeft {
