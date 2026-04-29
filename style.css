@@ -1024,3 +1024,114 @@ a {
   to { transform: translate3d(0,0,0); }
 }
 
+/* =========================
+   TESTIMONIALS SECTION
+========================= */
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.testimonial-card {
+  position: relative;
+  padding: 28px;
+  border-radius: 26px;
+  overflow: hidden;
+  transition: 0.35s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 25px 70px rgba(0,0,0,0.4);
+}
+
+/* HEADER */
+.testimonial-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.testimonial-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.testimonial-name h3 {
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+/* LINKEDIN ICON */
+.linkedin-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: #0a66c2;
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 900;
+  font-family: Arial, sans-serif;
+  box-shadow: 0 0 12px rgba(10, 102, 194, 0.5);
+}
+
+/* ROLE TEXT */
+.testimonial-header span {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+/* META TEXT */
+.testimonial-meta {
+  font-size: 0.75rem;
+  color: #9fdfff;
+}
+
+/* TEXT */
+.testimonial-text {
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 0.95rem;
+}
+
+/* QUOTE ICON */
+.quote-icon {
+  position: absolute;
+  top: 18px;
+  right: 24px;
+  font-size: 5rem;
+  font-weight: 900;
+  color: rgba(121, 216, 255, 0.15);
+  animation: quoteFloat 3.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.testimonial-card:hover .quote-icon {
+  color: rgba(121, 216, 255, 0.3);
+  transform: scale(1.08);
+}
+
+/* ANIMATION */
+@keyframes quoteFloat {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-8px) scale(1.04);
+  }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .testimonials-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
