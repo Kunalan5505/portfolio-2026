@@ -890,7 +890,7 @@ a {
   }
 }
 
-/* TOOLS - CONICORN STYLE */
+/* TOOLS - SMOOTH CONICORN STYLE */
 
 .tools-section {
   position: relative;
@@ -930,10 +930,12 @@ a {
   inset: 0;
   background: linear-gradient(
     90deg,
-    var(--bg) 0%,
-    transparent 15%,
-    transparent 85%,
-    var(--bg) 100%
+    rgba(7,17,31,1) 0%,
+    rgba(7,17,31,0.92) 7%,
+    transparent 20%,
+    transparent 80%,
+    rgba(7,17,31,0.92) 93%,
+    rgba(7,17,31,1) 100%
   );
   z-index: 3;
   pointer-events: none;
@@ -1001,14 +1003,18 @@ a {
   display: flex;
   gap: 16px;
   width: max-content;
+
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
 }
 
 .tools-row-left .tools-track {
-  animation: toolsScrollLeft 35s linear infinite;
+  animation: toolsScrollLeft 60s linear infinite;
 }
 
 .tools-row-right .tools-track {
-  animation: toolsScrollRight 35s linear infinite;
+  animation: toolsScrollRight 60s linear infinite;
 }
 
 .tools-ecosystem:hover .tools-track {
@@ -1035,13 +1041,14 @@ a {
   -webkit-backdrop-filter: blur(16px);
 
   box-shadow: 0 18px 45px rgba(0,0,0,0.25);
-  transition: 0.35s ease;
+  transition: transform 0.35s ease, border-color 0.35s ease, background 0.35s ease, box-shadow 0.35s ease;
 }
 
 .tool-pill img {
   width: 30px;
   height: 30px;
   object-fit: contain;
+  flex: 0 0 auto;
 }
 
 .tool-letter {
@@ -1070,20 +1077,22 @@ a {
 }
 
 @keyframes toolsScrollLeft {
-  from {
-    transform: translateX(0);
+  0% {
+    transform: translate3d(0, 0, 0);
   }
-  to {
-    transform: translateX(-50%);
+
+  100% {
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
 @keyframes toolsScrollRight {
-  from {
-    transform: translateX(-50%);
+  0% {
+    transform: translate3d(-50%, 0, 0);
   }
-  to {
-    transform: translateX(0);
+
+  100% {
+    transform: translate3d(0, 0, 0);
   }
 }
 
@@ -1091,6 +1100,7 @@ a {
   .tools-ecosystem {
     min-height: 560px;
     gap: 14px;
+    padding: 40px 0;
   }
 
   .tools-center-orb {
@@ -1118,11 +1128,17 @@ a {
     height: 68px;
     font-size: 0.85rem;
     border-radius: 22px;
+    padding: 14px 18px;
   }
 
   .tool-pill img,
   .tool-letter {
     width: 26px;
     height: 26px;
+  }
+
+  .tools-row-left .tools-track,
+  .tools-row-right .tools-track {
+    animation-duration: 45s;
   }
 }
