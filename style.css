@@ -1277,3 +1277,163 @@ a {
   }
 }
 
+/* =========================
+   WHY HIRE ME - ORB SYSTEM
+========================= */
+
+.why-orb-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.why-orb-wrap {
+  position: relative;
+  height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* CENTER */
+.why-orb-center {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  background: linear-gradient(145deg, #171c2e, #050814);
+  border: 1px solid rgba(255,255,255,0.16);
+
+  box-shadow:
+    0 0 80px rgba(121,216,255,0.3),
+    0 0 120px rgba(123,140,255,0.25);
+
+  animation: orbPulse 4s ease-in-out infinite;
+}
+
+.why-orb-center h3 {
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.why-orb-center p {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* ORBITS */
+.orbit {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.orbit-item {
+  position: absolute;
+  padding: 12px 18px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 700;
+
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+
+  backdrop-filter: blur(12px);
+
+  transition: 0.35s ease;
+}
+
+/* POSITIONING */
+.orbit-1 .orbit-item { top: 0; left: 50%; transform: translateX(-50%); }
+.orbit-2 .orbit-item { top: 25%; right: 0; }
+.orbit-3 .orbit-item { bottom: 25%; right: 0; }
+.orbit-4 .orbit-item { bottom: 0; left: 50%; transform: translateX(-50%); }
+.orbit-5 .orbit-item { bottom: 25%; left: 0; }
+.orbit-6 .orbit-item { top: 25%; left: 0; }
+
+/* HOVER EFFECT */
+.orbit-item:hover {
+  transform: scale(1.08);
+  background:
+    linear-gradient(135deg, rgba(121,216,255,0.2), rgba(123,140,255,0.18)),
+    rgba(255,255,255,0.08);
+  border-color: rgba(121,216,255,0.5);
+  box-shadow:
+    0 0 25px rgba(121,216,255,0.35);
+}
+
+/* ANIMATION */
+@keyframes orbPulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+}
+
+/* FLOAT ANIMATION */
+.orbit-1 { animation: float1 6s ease-in-out infinite; }
+.orbit-2 { animation: float2 7s ease-in-out infinite; }
+.orbit-3 { animation: float3 8s ease-in-out infinite; }
+.orbit-4 { animation: float4 6.5s ease-in-out infinite; }
+.orbit-5 { animation: float5 7.5s ease-in-out infinite; }
+.orbit-6 { animation: float6 6.8s ease-in-out infinite; }
+
+@keyframes float1 {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes float2 {
+  0%,100% { transform: translateX(0); }
+  50% { transform: translateX(10px); }
+}
+@keyframes float3 {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+@keyframes float4 {
+  0%,100% { transform: translateX(0); }
+  50% { transform: translateX(-10px); }
+}
+@keyframes float5 {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+@keyframes float6 {
+  0%,100% { transform: translateX(0); }
+  50% { transform: translateX(-8px); }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  .why-orb-wrap {
+    height: auto;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .why-orb-center {
+    position: relative;
+  }
+
+  .orbit {
+    position: relative;
+    width: 100%;
+    height: auto;
+  }
+
+  .orbit-item {
+    position: relative;
+    margin: 8px auto;
+    display: block;
+    width: fit-content;
+  }
+}
+
+
