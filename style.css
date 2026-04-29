@@ -1135,115 +1135,167 @@ a {
   }
 }
 
-/* EXPERIENCE - PROCESS STYLE */
+/* EXPERIENCE - CONICORN INSPIRED PROCESS SCROLL */
 
-.experience-process {
+.experience-process-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.experience-process-v2 {
   display: grid;
-  gap: 22px;
+  gap: 28px;
   position: relative;
 }
 
-.experience-step {
-  position: relative;
+.experience-process-v2::before {
+  content: "";
+  position: absolute;
+  left: 58px;
+  top: 40px;
+  bottom: 40px;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(121,216,255,0.45),
+    rgba(123,140,255,0.35),
+    transparent
+  );
+}
+
+.experience-process-card {
+  position: sticky;
+  top: 110px;
   display: grid;
   grid-template-columns: 120px 1fr;
-  gap: 28px;
-  padding: 32px;
-  border-radius: 30px;
+  gap: 34px;
+  padding: 36px;
+  border-radius: 34px;
+  min-height: 420px;
   overflow: hidden;
-  transition: 0.35s ease;
+  transform-origin: center top;
+  transition: 0.45s ease;
 }
 
-.experience-step::before {
+.experience-process-card:nth-child(1) {
+  z-index: 3;
+}
+
+.experience-process-card:nth-child(2) {
+  z-index: 4;
+}
+
+.experience-process-card:nth-child(3) {
+  z-index: 5;
+}
+
+.experience-process-card::before {
   content: "";
   position: absolute;
   inset: -1px;
   background:
-    radial-gradient(circle at top left, rgba(121,216,255,0.22), transparent 34%),
-    radial-gradient(circle at bottom right, rgba(123,140,255,0.18), transparent 40%);
+    radial-gradient(circle at 8% 18%, rgba(121,216,255,0.22), transparent 30%),
+    radial-gradient(circle at 90% 80%, rgba(123,140,255,0.18), transparent 35%);
   opacity: 0;
-  transition: 0.35s ease;
+  transition: 0.45s ease;
   z-index: -1;
 }
 
-.experience-step:hover {
-  transform: translateY(-6px);
-  border-color: rgba(121,216,255,0.45);
-  box-shadow: 0 28px 80px rgba(0,0,0,0.45);
+.experience-process-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  border-color: rgba(121,216,255,0.42);
+  box-shadow: 0 34px 90px rgba(0,0,0,0.48);
 }
 
-.experience-step:hover::before {
+.experience-process-card:hover::before {
   opacity: 1;
 }
 
-.experience-number {
-  font-size: clamp(2.5rem, 6vw, 5rem);
+.experience-step-no {
+  position: relative;
+  z-index: 2;
+  font-size: clamp(4rem, 9vw, 7rem);
   font-weight: 900;
-  line-height: 1;
+  line-height: 0.9;
   letter-spacing: -0.08em;
-  color: rgba(255,255,255,0.18);
+  color: rgba(255,255,255,0.16);
 }
 
-.experience-content {
+.experience-step-no::after {
+  content: "";
+  position: absolute;
+  left: 18px;
+  top: 110px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #9cecff, #8092ff);
+  box-shadow: 0 0 25px rgba(121,216,255,0.8);
+}
+
+.experience-main {
   position: relative;
   z-index: 2;
 }
 
 .experience-date {
-  display: inline-block;
   color: #9fdfff;
   font-size: 0.82rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  margin-bottom: 12px;
-}
-
-.experience-content h3 {
-  font-size: clamp(1.4rem, 3vw, 2.2rem);
-  line-height: 1.15;
-  margin-bottom: 8px;
-}
-
-.experience-content h4 {
-  color: #cfe9ff;
-  font-size: 1rem;
-  font-weight: 700;
+  letter-spacing: 0.14em;
   margin-bottom: 14px;
 }
 
-.experience-content p {
-  color: var(--muted);
-  line-height: 1.8;
-  max-width: 900px;
-  margin-bottom: 20px;
+.experience-main h3 {
+  font-size: clamp(1.8rem, 4vw, 3rem);
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  margin-bottom: 10px;
 }
 
-.experience-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-.experience-tags span {
-  padding: 8px 13px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.075);
-  border: 1px solid rgba(255,255,255,0.09);
-  color: #dceaff;
-  font-size: 0.82rem;
+.experience-main h4 {
+  color: #cfe9ff;
+  font-size: 1rem;
   font-weight: 700;
+  margin-bottom: 22px;
 }
 
-@media (max-width: 768px) {
-  .experience-step {
-    grid-template-columns: 1fr;
-    gap: 18px;
-    padding: 26px;
+.experience-main ul {
+  display: grid;
+  gap: 12px;
+  padding-left: 18px;
+  color: var(--muted);
+  line-height: 1.75;
+  max-width: 980px;
+}
+
+.experience-main li::marker {
+  color: #9fdfff;
+}
+
+@media (max-width: 900px) {
+  .experience-process-v2::before {
+    left: 36px;
   }
 
-  .experience-number {
-    font-size: 3.2rem;
+  .experience-process-card {
+    position: relative;
+    top: auto;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    min-height: auto;
+    padding: 28px;
+  }
+
+  .experience-step-no {
+    font-size: 4rem;
+  }
+
+  .experience-step-no::after {
+    top: 70px;
+    left: 10px;
   }
 }
 
