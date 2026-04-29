@@ -308,3 +308,39 @@ document.addEventListener("keydown", (event) => {
     closeModal();
   }
 });
+
+/* EXPERIENCE TIMELINE SCROLL PROGRESS */
+
+const experienceTimeline = document.getElementById("experienceTimeline");
+const experienceLineProgress = document.getElementById("experienceLineProgress");
+const experienceItems = document.querySelectorAll(".experience-scroll-item");
+
+function updateExperienceTimeline() {
+  if (!experienceTimeline || !experienceLineProgress) return;
+
+  const rect = experienceTimeline.getBoundingClientRect();
+  const windowHeight = window.innerHeight;
+
+  const start = windowHeight * 0.75;
+  const end = rect.height - windowHeight * 0.25;
+
+  let progress = (start - rect.top) / end;
+  progress = Math.max(0, Math.min(progress, 1));
+
+  experienceLineProgress.style.height = `${progress * 100}%`;
+
+  experienceItems.forEach((item) => {
+    const itemRect = item.getBoundingClientRect();
+    const itemCenter = itemRect.top + itemRect.height / 2;
+
+    if (itemCenter < windowHeight * 0.65) {
+      item.classList.add("is-active");
+    } else {
+      item.classList.remove("is-active");
+    }
+  });
+}
+
+window.addEventListener("scroll", updateExperienceTimeline);
+window.addEventListener("load", updateExperienceTimeline);
+window.addEventListener("resize", updateExperienceTimeline);
