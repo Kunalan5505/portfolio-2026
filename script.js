@@ -404,8 +404,11 @@ window.addEventListener("scroll", triggerKpiCounters);
 window.addEventListener("load", triggerKpiCounters);
 
 
-// 👇 paste here (bottom of script.js)
+/* =========================
+   HERO BACKGROUND + TEXT GLOW
+========================= */
 
+/* Background glow */
 const hero = document.querySelector(".premium-video-hero");
 
 if (hero) {
@@ -417,5 +420,20 @@ if (hero) {
 
     hero.style.setProperty("--mouse-x", `${x}px`);
     hero.style.setProperty("--mouse-y", `${y}px`);
+  });
+}
+
+/* Heading text glow */
+const heroHeading = document.querySelector(".hero-highlight-heading");
+
+if (heroHeading) {
+  heroHeading.addEventListener("mousemove", (e) => {
+    const rect = heroHeading.getBoundingClientRect();
+
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+
+    heroHeading.style.setProperty("--text-x", `${x}%`);
+    heroHeading.style.setProperty("--text-y", `${y}%`);
   });
 }
