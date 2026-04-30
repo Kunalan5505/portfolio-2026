@@ -344,3 +344,54 @@ function updateExperienceTimeline() {
 window.addEventListener("scroll", updateExperienceTimeline);
 window.addEventListener("load", updateExperienceTimeline);
 window.addEventListener("resize", updateExperienceTimeline);
+
+
+// your existing code above...
+
+
+
+/* =========================
+   KPI COUNT-UP ANIMATION
+========================= */
+
+const counters = document.querySelectorAll(".kpi-number");
+
+function animateCounters() {
+  counters.forEach(counter => {
+    const target = parseFloat(counter.getAttribute("data-target"));
+    let current = 0;
+
+    const increment = target / 80;
+
+    function updateCounter() {
+      current += increment;
+
+      if (current < target) {
+        counter.innerText = current.toFixed(1);
+        requestAnimationFrame(updateCounter);
+      } else {
+        counter.innerText = target;
+      }
+    }
+
+    updateCounter();
+  });
+}
+
+let hasAnimated = false;
+
+function handleScrollAnimation() {
+  const section = document.getElementById("achievements");
+
+  if (!section) return;
+
+  const rect = section.getBoundingClientRect();
+
+  if (!hasAnimated && rect.top < window.innerHeight - 100) {
+    animateCounters();
+    hasAnimated = true;
+  }
+}
+
+window.addEventListener("scroll", handleScrollAnimation);
+window.addEventListener("load", handleScrollAnimation);
