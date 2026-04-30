@@ -2142,48 +2142,64 @@ a {
 
 
 /* =========================
-   PREMIUM HERO (CENTER WITH NAVBAR)
+   ROOT (HEADER HEIGHT CONTROL)
+========================= */
+
+:root {
+  --header-height: 86px;
+}
+
+/* =========================
+   HERO SECTION
 ========================= */
 
 .premium-video-hero {
   position: relative;
-  height: 100vh;
+
+  /* Correct centering with navbar */
+  min-height: calc(100svh - var(--header-height));
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  padding-top: 80px; /* adjust based on navbar height */
-  box-sizing: border-box;
-
+  padding: clamp(32px, 5vh, 70px) 20px;
   text-align: center;
   overflow: hidden;
 }
 
-/* CONTENT WRAPPER */
+/* =========================
+   HERO CONTENT
+========================= */
+
 .hero-video-content {
   position: relative;
   z-index: 3;
+
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
 
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-  max-width: 980px;
-  margin: 0 auto;
-
-  transform: translateY(-20px); /* fine tune visual center */
-  animation: heroFade 1s ease forwards;
 }
 
-/* HERO HEADING (GRADIENT GLOW) */
+/* =========================
+   HERO HEADING (GRADIENT GLOW)
+========================= */
+
 .hero-highlight-heading {
+  max-width: 980px;
   margin: 0 auto 20px;
-  font-size: clamp(3.2rem, 6.2vw, 5.8rem);
+
+  font-size: clamp(2.8rem, 6vw, 5.8rem);
   line-height: 1.05;
   letter-spacing: -0.055em;
   font-weight: 800;
+
+  text-align: center;
 
   background: linear-gradient(
     135deg,
@@ -2202,58 +2218,95 @@ a {
     0 0 48px rgba(123, 140, 255, 0.22);
 }
 
-/* SUBTEXT */
+/* =========================
+   SUBTEXT
+========================= */
+
 .hero-subtext {
   max-width: 700px;
   margin: 0 auto 28px;
+
   color: var(--muted);
-  font-size: 1.08rem;
+  font-size: clamp(0.95rem, 1.4vw, 1.08rem);
   line-height: 1.8;
+  text-align: center;
 }
 
-/* BUTTONS */
+/* =========================
+   BUTTONS
+========================= */
+
 .hero-buttons {
   display: flex;
   gap: 14px;
   flex-wrap: wrap;
+
   justify-content: center;
   align-items: center;
 
   margin-top: 10px;
 }
 
-/* FADE ANIMATION */
-@keyframes heroFade {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(-20px);
-  }
-}
+/* =========================
+   SHORT SCREEN FIX (LAPTOPS)
+========================= */
 
-/* MOBILE */
-@media (max-width: 768px) {
+@media (max-height: 760px) {
   .premium-video-hero {
-    height: 100vh;
-    padding-top: 70px;
+    padding-top: 28px;
+    padding-bottom: 28px;
   }
 
   .hero-highlight-heading {
-    font-size: 2.7rem;
+    font-size: clamp(2.5rem, 5.2vw, 4.8rem);
+    margin-bottom: 16px;
   }
 
   .hero-subtext {
-    font-size: 1rem;
+    margin-bottom: 22px;
+    line-height: 1.6;
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 768px) {
+  :root {
+    --header-height: 74px;
+  }
+
+  .premium-video-hero {
+    min-height: calc(100svh - var(--header-height));
+    padding: 40px 20px;
+  }
+
+  .hero-highlight-heading {
+    font-size: clamp(2.35rem, 12vw, 3.2rem);
+    line-height: 1.08;
+    letter-spacing: -0.045em;
+  }
+
+  .hero-subtext {
+    max-width: 92%;
   }
 
   .hero-buttons {
     width: 100%;
   }
+}
 
-  .hero-bg-video {
-    opacity: 0.2;
+/* =========================
+   VERY SMALL DEVICES
+========================= */
+
+@media (max-width: 420px) {
+  .hero-highlight-heading {
+    font-size: 2.25rem;
+  }
+
+  .hero-buttons .btn {
+    width: 100%;
   }
 }
