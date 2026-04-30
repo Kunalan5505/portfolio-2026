@@ -403,23 +403,3 @@ function triggerKpiCounters() {
 window.addEventListener("scroll", triggerKpiCounters);
 window.addEventListener("load", triggerKpiCounters);
 
-
-/* HERO TYPING EFFECT */
-
-const typingText = document.getElementById("typingText");
-
-const heroText = "I build scalable marketing systems that deliver measurable growth.";
-
-let typingIndex = 0;
-
-function typeHeroHeading() {
-  if (!typingText) return;
-
-  if (typingIndex < heroText.length) {
-    typingText.textContent += heroText.charAt(typingIndex);
-    typingIndex++;
-    setTimeout(typeHeroHeading, 45);
-  }
-}
-
-window.addEventListener("load", typeHeroHeading);
