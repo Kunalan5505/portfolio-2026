@@ -354,44 +354,51 @@ window.addEventListener("resize", updateExperienceTimeline);
    KPI COUNT-UP ANIMATION
 ========================= */
 
-const counters = document.querySelectorAll(".kpi-number");
+const kpiCounters = document.querySelectorAll(".kpi-number");
+let kpiAnimated = false;
 
-function animateCounters() {
-  counters.forEach(counter => {
+function animateKpiCounters() {
+  kpiCounters.forEach((counter) => {
     const target = parseFloat(counter.getAttribute("data-target"));
     let current = 0;
+    const duration = 1400;
+    const startTime = performance.now();
 
-    const increment = target / 80;
+    function updateCounter(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const easedProgress = 1 - Math.pow(1 - progress, 3);
 
-    function updateCounter() {
-      current += increment;
+      current = target * easedProgress;
 
-      if (current < target) {
+      if (target % 1 !== 0) {
         counter.innerText = current.toFixed(1);
+      } else {
+        counter.innerText = Math.round(current);
+      }
+
+      if (progress < 1) {
         requestAnimationFrame(updateCounter);
       } else {
-        counter.innerText = target;
+        counter.innerText = target % 1 !== 0 ? target.toFixed(1) : target;
       }
     }
 
-    updateCounter();
+    requestAnimationFrame(updateCounter);
   });
 }
 
-let hasAnimated = false;
-
-function handleScrollAnimation() {
+function triggerKpiCounters() {
   const section = document.getElementById("achievements");
-
-  if (!section) return;
+  if (!section || kpiAnimated) return;
 
   const rect = section.getBoundingClientRect();
 
-  if (!hasAnimated && rect.top < window.innerHeight - 100) {
-    animateCounters();
-    hasAnimated = true;
+  if (rect.top < window.innerHeight - 120) {
+    animateKpiCounters();
+    kpiAnimated = true;
   }
 }
 
-window.addEventListener("scroll", handleScrollAnimation);
-window.addEventListener("load", handleScrollAnimation);
+window.addEventListener("scroll", triggerKpiCounters);
+window.addEventListener("load", triggerKpiCounters);
