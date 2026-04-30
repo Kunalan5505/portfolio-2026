@@ -2142,23 +2142,25 @@ a {
 
 
 /* =========================
-   PREMIUM HERO (CENTERED + GRADIENT TEXT)
+   PREMIUM HERO (CENTER WITH NAVBAR)
 ========================= */
 
 .premium-video-hero {
   position: relative;
-  min-height: 100vh;
-  padding: 0 20px;
+  height: 100vh;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
+  padding-top: 80px; /* adjust based on navbar height */
+  box-sizing: border-box;
+
   text-align: center;
   overflow: hidden;
 }
 
-/* CONTENT CENTERING */
+/* CONTENT WRAPPER */
 .hero-video-content {
   position: relative;
   z-index: 3;
@@ -2171,10 +2173,11 @@ a {
   max-width: 980px;
   margin: 0 auto;
 
+  transform: translateY(-20px); /* fine tune visual center */
   animation: heroFade 1s ease forwards;
 }
 
-/* HEADING (GRADIENT GLOW - NO LOOP) */
+/* HERO HEADING (GRADIENT GLOW) */
 .hero-highlight-heading {
   margin: 0 auto 20px;
   font-size: clamp(3.2rem, 6.2vw, 5.8rem);
@@ -2208,7 +2211,7 @@ a {
   line-height: 1.8;
 }
 
-/* BUTTONS CENTERED */
+/* BUTTONS */
 .hero-buttons {
   display: flex;
   gap: 14px;
@@ -2219,23 +2222,23 @@ a {
   margin-top: 10px;
 }
 
-/* FADE IN ANIMATION */
+/* FADE ANIMATION */
 @keyframes heroFade {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(-20px);
   }
 }
 
-/* MOBILE FIX */
+/* MOBILE */
 @media (max-width: 768px) {
   .premium-video-hero {
-    min-height: 100vh;
-    padding: 0 20px;
+    height: 100vh;
+    padding-top: 70px;
   }
 
   .hero-highlight-heading {
