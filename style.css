@@ -2357,3 +2357,92 @@ a {
     opacity: 0.2;
   }
 }
+
+
+/* =========================
+   FIX: FLOATING NAVBAR OVER HERO
+   Paste this at the VERY BOTTOM of style.css
+========================= */
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  padding: 20px 0;
+  background: transparent;
+}
+
+.navbar {
+  border-radius: 999px;
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.16),
+    rgba(255, 255, 255, 0.06)
+  );
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.32);
+}
+
+.premium-video-hero {
+  min-height: 100svh;
+  padding: 140px 20px 70px;
+}
+
+main {
+  position: relative;
+  z-index: 1;
+}
+
+/* Mobile menu fix */
+@media (max-width: 768px) {
+  .header {
+    padding: 20px 0;
+  }
+
+  .navbar {
+    padding: 18px 28px;
+  }
+
+  .nav-links {
+    display: none;
+    position: fixed;
+    top: 105px;
+    left: 4%;
+    width: 92%;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 24px;
+    background: rgba(10, 16, 30, 0.94);
+    border: 1px solid rgba(255,255,255,0.12);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+  }
+
+  .nav-links.show {
+    display: flex;
+  }
+
+  .premium-video-hero {
+    min-height: 100svh;
+    padding: 150px 20px 60px;
+  }
+}
+
+@media (max-width: 520px) {
+  .premium-video-hero {
+    padding-top: 145px;
+  }
+
+  .hero-highlight-heading {
+    font-size: clamp(2.1rem, 11vw, 3rem);
+  }
+}
