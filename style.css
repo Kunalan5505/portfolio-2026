@@ -2449,13 +2449,19 @@ main {
 
 
 /* =========================
-   CLEAR ANIMATED NEON PROFILE RING
+   NAV PROFILE - CLEAN ANIMATED NEON RING
 ========================= */
+
+.logo-profile {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
 
 .profile-ring {
   position: relative;
-  width: 46px;
-  height: 46px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -2465,7 +2471,7 @@ main {
 .profile-ring::before {
   content: "";
   position: absolute;
-  inset: -4px;
+  inset: -3px;
   border-radius: 50%;
   background: conic-gradient(
     from 0deg,
@@ -2478,23 +2484,20 @@ main {
   z-index: 0;
 }
 
-.profile-ring::after {
-  content: "";
-  position: absolute;
-  inset: 1px;
-  border-radius: 50%;
-  background: #081220;
-  z-index: 1;
-}
-
 .profile-ring img {
   position: relative;
   z-index: 2;
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #081220;
+  border: 3px solid #081220;
+  background: #081220;
+}
+
+.logo-profile span:last-child {
+  display: inline-block;
+  line-height: 1;
 }
 
 .logo-profile:hover .profile-ring::before {
@@ -2510,12 +2513,12 @@ main {
 
 @media (max-width: 520px) {
   .profile-ring {
-    width: 42px;
-    height: 42px;
+    width: 38px;
+    height: 38px;
   }
 
   .profile-ring img {
-    width: 36px;
-    height: 36px;
+    width: 34px;
+    height: 34px;
   }
 }
