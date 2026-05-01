@@ -2446,3 +2446,115 @@ main {
     font-size: clamp(2.1rem, 11vw, 3rem);
   }
 }
+
+
+/* =========================
+   NAV PROFILE - ANIMATED NEON
+========================= */
+
+.logo-profile {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Wrapper ring */
+.profile-ring {
+  position: relative;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Rotating neon ring */
+.profile-ring::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+
+  background: conic-gradient(
+    from 0deg,
+    #9cecff,
+    #7b8cff,
+    #9cecff
+  );
+
+  animation: rotateRing 4s linear infinite;
+
+  filter: blur(6px);
+  opacity: 0.85;
+  z-index: 0;
+}
+
+/* Inner dark layer */
+.profile-ring::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: 50%;
+  background: #081220;
+  z-index: 1;
+}
+
+/* Image */
+.profile-ring img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  position: relative;
+  z-index: 2;
+}
+
+/* Glow pulse */
+.profile-ring {
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+/* Hover effect */
+.logo-profile:hover .profile-ring::before {
+  animation-duration: 1.5s;
+  filter: blur(10px);
+}
+
+.logo-profile:hover .profile-ring {
+  transform: scale(1.08);
+}
+
+/* Text */
+.logo-profile span:last-child {
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  font-size: 0.95rem;
+}
+
+/* Animations */
+@keyframes rotateRing {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px rgba(121, 216, 255, 0.4));
+  }
+  50% {
+    filter: drop-shadow(0 0 18px rgba(121, 216, 255, 0.8));
+  }
+}
+
+/* Mobile */
+@media (max-width: 520px) {
+  .profile-ring {
+    width: 38px;
+    height: 38px;
+  }
+}
