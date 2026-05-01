@@ -2491,7 +2491,7 @@ main {
   height: 38px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #081220;
+  border: 1px solid #081220;
   background: #081220;
 }
 
