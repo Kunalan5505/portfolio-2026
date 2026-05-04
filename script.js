@@ -452,3 +452,104 @@ if (heroHeading) {
     heroHeading.style.setProperty("--text-y", `${y}%`);
   });
 }
+
+
+/* =========================
+   FLOATING AI CHATBOT
+========================= */
+
+const aiChatToggle = document.getElementById("aiChatToggle");
+const aiChatPanel = document.getElementById("aiChatPanel");
+const aiChatClose = document.getElementById("aiChatClose");
+const aiChatBody = document.getElementById("aiChatBody");
+const aiChatInput = document.getElementById("aiChatInput");
+const aiSendBtn = document.getElementById("aiSendBtn");
+
+const aiResponses = {
+  experience:
+    "Kunalan is a Senior Digital Marketing Executive with experience in paid media, lead generation, landing page optimization, automation, analytics, and full-funnel campaign strategy. He has managed 60+ campaigns and RM1.8M+ in ad budget.",
+
+  projects:
+    "Key projects include landing page development, multi-channel campaign management, AI WhatsApp automation, email automation, marketing analytics infrastructure, and SEO performance optimization. You can view more under the Projects section.",
+
+  results:
+    "Key performance impact includes +21.5% YoY lead growth, -10% lower CPL, +8% conversion rate improvement, +17% ROAS improvement, and +30% lead engagement through automation.",
+
+  skills:
+    "Kunalan works with Google Ads, Meta Ads, TikTok Ads, LinkedIn Ads, GA4, Google Tag Manager, Meta Pixel, Conversion API, Salesforce, SleekFlow, WordPress, Elementor, Oxygen, SEMrush, Power BI, Canva, and AI tools.",
+
+  cv:
+    "You can download Kunalan’s CV from the Contact section. Click the Download CV button there, or scroll to the Contact section.",
+
+  contact:
+    "You can contact Kunalan by email at kunalan517@gmail.com or connect through LinkedIn. You can also continue directly on WhatsApp using the green button below."
+};
+
+function addAiMessage(text, sender = "bot") {
+  const message = document.createElement("div");
+  message.className = `ai-message ${sender}`;
+  message.innerText = text;
+  aiChatBody.appendChild(message);
+  aiChatBody.scrollTop = aiChatBody.scrollHeight;
+}
+
+function getAiResponse(input) {
+  const text = input.toLowerCase();
+
+  if (text.includes("experience") || text.includes("work")) return aiResponses.experience;
+  if (text.includes("project") || text.includes("case")) return aiResponses.projects;
+  if (text.includes("result") || text.includes("achievement") || text.includes("kpi")) return aiResponses.results;
+  if (text.includes("skill") || text.includes("tools") || text.includes("platform")) return aiResponses.skills;
+  if (text.includes("cv") || text.includes("resume")) return aiResponses.cv;
+  if (text.includes("contact") || text.includes("email") || text.includes("whatsapp")) return aiResponses.contact;
+
+  return "I can help with Kunalan’s experience, projects, results, skills, CV, or contact details. Try clicking one of the quick options above.";
+}
+
+function sendAiMessage() {
+  const value = aiChatInput.value.trim();
+  if (!value) return;
+
+  addAiMessage(value, "user");
+  aiChatInput.value = "";
+
+  setTimeout(() => {
+    addAiMessage(getAiResponse(value), "bot");
+  }, 300);
+}
+
+if (aiChatToggle && aiChatPanel) {
+  aiChatToggle.addEventListener("click", () => {
+    aiChatPanel.classList.toggle("show");
+  });
+}
+
+if (aiChatClose && aiChatPanel) {
+  aiChatClose.addEventListener("click", () => {
+    aiChatPanel.classList.remove("show");
+  });
+}
+
+document.querySelectorAll("[data-ai]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const key = button.getAttribute("data-ai");
+    const label = button.innerText;
+
+    addAiMessage(label, "user");
+    setTimeout(() => {
+      addAiMessage(aiResponses[key], "bot");
+    }, 300);
+  });
+});
+
+if (aiSendBtn) {
+  aiSendBtn.addEventListener("click", sendAiMessage);
+}
+
+if (aiChatInput) {
+  aiChatInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      sendAiMessage();
+    }
+  });
+}
