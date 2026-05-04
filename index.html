@@ -903,6 +903,52 @@
     </div>
   </footer>
 
+  <!-- FLOATING AI CHATBOT -->
+<div class="ai-chat-widget" id="aiChatWidget">
+  <button class="ai-chat-toggle" id="aiChatToggle" aria-label="Open AI Assistant">
+    <span class="ai-spark">✦</span>
+    <span class="ai-toggle-text">Ask AI</span>
+  </button>
+
+  <div class="ai-chat-panel glass" id="aiChatPanel">
+    <div class="ai-chat-header">
+      <div>
+        <h3>✦ Kunalan AI Assistant</h3>
+        <p>Ask about my experience, projects, results, or skills.</p>
+      </div>
+      <button id="aiChatClose" class="ai-chat-close">×</button>
+    </div>
+
+    <div class="ai-chat-body" id="aiChatBody">
+      <div class="ai-message bot">
+        Hi, I can help you explore Kunalan’s work, results, and experience.
+      </div>
+
+      <div class="ai-quick-actions">
+        <button data-ai="experience">Experience</button>
+        <button data-ai="projects">Projects</button>
+        <button data-ai="results">Results</button>
+        <button data-ai="skills">Skills</button>
+        <button data-ai="cv">Download CV</button>
+        <button data-ai="contact">Contact</button>
+      </div>
+    </div>
+
+    <div class="ai-chat-footer">
+      <input type="text" id="aiChatInput" placeholder="Type your question..." />
+      <button id="aiSendBtn">Send</button>
+    </div>
+
+    <a
+      class="ai-whatsapp-btn"
+      href="https://wa.me/60123456789?text=Hi%20Kunalan%2C%20I%20found%20your%20portfolio%20and%20would%20like%20to%20connect."
+      target="_blank"
+    >
+      Continue on WhatsApp →
+    </a>
+  </div>
+</div>
+
   <script src="script.js"></script>
 </body>
 </html>
