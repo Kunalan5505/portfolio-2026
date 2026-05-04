@@ -2538,9 +2538,9 @@ main {
 
 .ai-chat-toggle {
   position: relative;
+  width: 62px;
   height: 62px;
-  min-width: 62px;
-  padding: 0 20px;
+  padding: 0;
   border-radius: 999px;
   border: none;
   cursor: pointer;
@@ -2560,6 +2560,12 @@ main {
     0 18px 50px rgba(0, 0, 0, 0.4);
 
   overflow: hidden;
+  transition: width 0.35s ease, padding 0.35s ease;
+}
+
+.ai-chat-toggle:hover {
+  width: 132px;
+  padding: 0 20px;
 }
 
 .ai-chat-toggle::before {
@@ -2591,6 +2597,9 @@ main {
 .ai-spark {
   font-size: 1.35rem;
   line-height: 1;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
 }
 
 .ai-toggle-text {
@@ -2625,7 +2634,7 @@ main {
   right: 0;
   bottom: 82px;
 
-  width: min(380px, calc(100vw - 32px));
+  width: min(390px, calc(100vw - 32px));
   border-radius: 28px;
   overflow: hidden;
 
@@ -2651,13 +2660,24 @@ main {
 
 .ai-chat-header h3 {
   font-size: 1rem;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 
-.ai-chat-header p {
+.ai-online-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #cfe9ff;
   font-size: 0.82rem;
-  color: var(--muted);
-  line-height: 1.5;
+  font-weight: 800;
+}
+
+.ai-online-status span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #35ff9f;
+  box-shadow: 0 0 14px rgba(53,255,159,0.9);
 }
 
 .ai-chat-close {
@@ -2673,7 +2693,7 @@ main {
 
 .ai-chat-body {
   padding: 18px;
-  max-height: 330px;
+  max-height: 340px;
   overflow-y: auto;
   display: grid;
   gap: 12px;
@@ -2753,6 +2773,17 @@ main {
   color: #081220;
   font-weight: 900;
   cursor: pointer;
+}
+
+.ai-message-btn {
+  display: inline-flex;
+  margin: 8px 8px 0 0;
+  padding: 9px 13px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #9cecff, #8092ff);
+  color: #081220;
+  font-weight: 900;
+  font-size: 0.78rem;
 }
 
 .ai-whatsapp-btn {
