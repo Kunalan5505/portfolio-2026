@@ -228,10 +228,11 @@ project2: {
       "Improved attribution accuracy, better decision-making, and clearer campaign performance reporting."
   },
 
-  project6: {
+project6: {
   title: "SEO Performance Optimization",
   subtitle: "Initiative 06",
-  images: ["images/project-6-seo.jpg"],
+  images: ["images/project-6.jpg", "images/project-6-1.jpg"],
+
   overview:
     "Analyzed and optimized non-branded keyword performance to improve organic visibility across high-intent education search terms. The project focused on keyword ranking movement, search volume analysis, SERP changes, and ongoing SEO performance monitoring.",
   role:
