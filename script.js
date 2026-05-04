@@ -226,7 +226,21 @@ project2: {
       "Google Tag Manager, GA4, Meta Pixel, Google Ads Conversion Tracking, Conversion APIs, Google Search Console, Power BI.",
     result:
       "Improved attribution accuracy, better decision-making, and clearer campaign performance reporting."
-  }
+  },
+
+  project6: {
+  title: "SEO Performance Optimization",
+  subtitle: "Initiative 06",
+  images: ["images/project-6-seo.jpg"],
+  overview:
+    "Analyzed and optimized non-branded keyword performance to improve organic visibility across high-intent education search terms. The project focused on keyword ranking movement, search volume analysis, SERP changes, and ongoing SEO performance monitoring.",
+  role:
+    "SEO performance analysis, keyword tracking, ranking movement review, search intent evaluation, on-page SEO recommendations, and monthly reporting insights.",
+  tools:
+    "Google Search Console, SEMrush, GA4, keyword ranking reports, and SEO performance dashboards.",
+  result:
+    "Tracked 76 keywords ranking in the Top 10, maintained strong visibility for high-volume terms such as MBA, and identified ranking gains across diploma and postgraduate-related keywords."
+}
 };
 
 function openProjectModal(projectKey) {
