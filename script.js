@@ -523,6 +523,8 @@ You can view more under the Projects section.`,
 };
 
 function addAiMessage(text, sender = "bot") {
+  if (!aiChatBody) return;
+
   const message = document.createElement("div");
   message.className = `ai-message ${sender}`;
 
@@ -609,48 +611,86 @@ function getAiResponse(input) {
     {
       intent: "experience",
       keys: [
-        "experience", "background", "work", "career", "what does he do",
-        "who is", "about him"
+        "experience",
+        "background",
+        "work",
+        "career",
+        "what does he do",
+        "who is",
+        "about him"
       ],
       response: aiResponses.experience
     },
     {
       intent: "projects",
       keys: [
-        "project", "projects", "case study", "portfolio",
-        "what has he built", "what did he do"
+        "project",
+        "projects",
+        "case study",
+        "portfolio",
+        "what has he built",
+        "what did he do"
       ],
       response: aiResponses.projects
     },
     {
       intent: "results",
       keys: [
-        "result", "results", "achievement", "performance",
-        "kpi", "growth", "roas", "conversion", "leads", "cpl"
+        "result",
+        "results",
+        "achievement",
+        "performance",
+        "kpi",
+        "growth",
+        "roas",
+        "conversion",
+        "leads",
+        "cpl"
       ],
       response: aiResponses.results
     },
     {
       intent: "skills",
       keys: [
-        "skill", "skills", "tools", "platform", "software",
-        "google ads", "meta ads", "tiktok ads", "analytics",
-        "ga4", "gtm", "seo", "automation", "crm"
+        "skill",
+        "skills",
+        "tools",
+        "platform",
+        "software",
+        "google ads",
+        "meta ads",
+        "tiktok ads",
+        "linkedin ads",
+        "analytics",
+        "ga4",
+        "gtm",
+        "seo",
+        "automation",
+        "crm"
       ],
       response: aiResponses.skills
     },
     {
       intent: "cv",
       keys: [
-        "cv", "resume", "download cv", "download resume"
+        "cv",
+        "resume",
+        "download cv",
+        "download resume"
       ],
       response: aiResponses.cv
     },
     {
       intent: "contact",
       keys: [
-        "contact", "email", "reach", "hire", "whatsapp",
-        "linkedin", "how to contact", "how to reach"
+        "contact",
+        "email",
+        "reach",
+        "hire",
+        "whatsapp",
+        "linkedin",
+        "how to contact",
+        "how to reach"
       ],
       response: aiResponses.contact
     }
@@ -678,6 +718,8 @@ Try asking: "what results did he achieve?" or "what tools does he use?"`;
 }
 
 function sendAiMessage() {
+  if (!aiChatInput) return;
+
   const value = aiChatInput.value.trim();
   if (!value) return;
 
@@ -731,8 +773,11 @@ function updateAiSuggestions(value) {
     button.innerText = suggestion;
 
     button.addEventListener("click", () => {
+      if (!aiChatInput) return;
+
       aiChatInput.value = suggestion;
       aiSuggestionBox.classList.remove("show");
+      aiSuggestionBox.innerHTML = "";
       sendAiMessage();
     });
 
@@ -769,6 +814,8 @@ document.querySelectorAll("[data-ai]").forEach((button) => {
   button.addEventListener("click", () => {
     const key = button.getAttribute("data-ai");
     const label = button.innerText;
+
+    if (!aiResponses[key]) return;
 
     lastAiIntent = key;
 
