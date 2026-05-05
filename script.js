@@ -597,12 +597,19 @@ function sendAiMessage() {
 if (aiChatToggle && aiChatPanel) {
   aiChatToggle.addEventListener("click", () => {
     aiChatPanel.classList.toggle("show");
+
+    if (aiChatPanel.classList.contains("show")) {
+      document.body.classList.add("ai-chat-open");
+    } else {
+      document.body.classList.remove("ai-chat-open");
+    }
   });
 }
 
 if (aiChatClose && aiChatPanel) {
   aiChatClose.addEventListener("click", () => {
     aiChatPanel.classList.remove("show");
+    document.body.classList.remove("ai-chat-open");
   });
 }
 
@@ -629,4 +636,32 @@ if (aiChatInput) {
       sendAiMessage();
     }
   });
+}
+
+/* Prevent whole page scrolling when scrolling inside chatbot */
+if (aiChatBody) {
+  aiChatBody.addEventListener(
+    "wheel",
+    (event) => {
+      const atTop = aiChatBody.scrollTop === 0;
+      const atBottom =
+        Math.ceil(aiChatBody.scrollTop + aiChatBody.clientHeight) >=
+        aiChatBody.scrollHeight;
+
+      if ((event.deltaY < 0 && atTop) || (event.deltaY > 0 && atBottom)) {
+        event.preventDefault();
+      }
+
+      event.stopPropagation();
+    },
+    { passive: false }
+  );
+
+  aiChatBody.addEventListener(
+    "touchmove",
+    (event) => {
+      event.stopPropagation();
+    },
+    { passive: false }
+  );
 }
