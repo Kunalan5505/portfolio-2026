@@ -2891,3 +2891,53 @@ main {
 .modal-close {
   z-index: 5002 !important;
 }
+
+/* FIX AI CHATBOT HEIGHT ON LAPTOP / SMALL SCREENS */
+
+.ai-chat-panel {
+  max-height: calc(100vh - 130px);
+  display: flex;
+  flex-direction: column;
+}
+
+.ai-chat-body {
+  flex: 1;
+  min-height: 0;
+  max-height: none;
+  overflow-y: auto;
+}
+
+.ai-suggestion-box,
+.ai-chat-footer,
+.ai-whatsapp-btn {
+  flex-shrink: 0;
+}
+
+@media (max-height: 760px) {
+  .ai-chat-panel {
+    bottom: 82px;
+    max-height: calc(100vh - 105px);
+  }
+
+  .ai-chat-header {
+    padding: 16px 18px;
+  }
+
+  .ai-chat-body {
+    padding: 14px;
+  }
+
+  .ai-message {
+    font-size: 0.82rem;
+    line-height: 1.5;
+  }
+
+  .ai-chat-footer {
+    padding: 10px 12px;
+  }
+
+  .ai-whatsapp-btn {
+    margin: 0 12px 12px;
+    padding: 12px 14px;
+  }
+}
