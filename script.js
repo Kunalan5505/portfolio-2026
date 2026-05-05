@@ -464,6 +464,9 @@ const aiChatClose = document.getElementById("aiChatClose");
 const aiChatBody = document.getElementById("aiChatBody");
 const aiChatInput = document.getElementById("aiChatInput");
 const aiSendBtn = document.getElementById("aiSendBtn");
+const aiSuggestionBox = document.getElementById("aiSuggestionBox");
+
+let lastAiIntent = null;
 
 const aiResponses = {
   experience:
@@ -538,48 +541,140 @@ function addAiMessage(text, sender = "bot") {
   aiChatBody.scrollTop = aiChatBody.scrollHeight;
 }
 
+function getFollowUpResponse(intent) {
+  const followUps = {
+    experience:
+      `More about Kunalan’s experience:
+
+• Focuses on full-funnel digital marketing
+• Works across paid media, automation, CRO, and analytics
+• Has experience in education and lead generation campaigns
+• Builds landing pages, reporting systems, and campaign workflows`,
+
+    projects:
+      `More project details:
+
+• Landing pages connected with Salesforce forms
+• Multi-channel paid ads across Google, Meta, TikTok, and LinkedIn
+• WhatsApp AI automation using SleekFlow
+• GA4, GTM, Meta Pixel, and Conversion API tracking setup
+• SEO keyword tracking and ranking performance reports`,
+
+    results:
+      `Additional performance highlights:
+
+• Managed RM1.8M+ ad budget
+• Supported 5 institution websites
+• Managed 60+ campaigns
+• Improved lead quality and tracking visibility
+• Strengthened reporting for better marketing decisions`,
+
+    skills:
+      `More skills include:
+
+• Paid media planning and optimization
+• Landing page UX and CRO
+• Email automation and CRM workflows
+• Analytics dashboards and campaign reporting
+• SEO visibility and keyword performance tracking`,
+
+    cv:
+      aiResponses.cv,
+
+    contact:
+      aiResponses.contact
+  };
+
+  return followUps[intent] || "Tell me which area you want to know more about: experience, projects, results, skills, CV, or contact.";
+}
+
 function getAiResponse(input) {
   const text = input.toLowerCase();
 
-  if (text.includes("experience") || text.includes("work")) {
-    return aiResponses.experience;
+  const followUpWords = [
+    "tell me more",
+    "more",
+    "details",
+    "show more",
+    "explain",
+    "what else",
+    "continue"
+  ];
+
+  if (followUpWords.some((word) => text.includes(word)) && lastAiIntent) {
+    return getFollowUpResponse(lastAiIntent);
   }
 
-  if (text.includes("project") || text.includes("case")) {
-    return aiResponses.projects;
+  const intentMap = [
+    {
+      intent: "experience",
+      keys: [
+        "experience", "background", "work", "career", "what does he do",
+        "who is", "about him"
+      ],
+      response: aiResponses.experience
+    },
+    {
+      intent: "projects",
+      keys: [
+        "project", "projects", "case study", "portfolio",
+        "what has he built", "what did he do"
+      ],
+      response: aiResponses.projects
+    },
+    {
+      intent: "results",
+      keys: [
+        "result", "results", "achievement", "performance",
+        "kpi", "growth", "roas", "conversion", "leads", "cpl"
+      ],
+      response: aiResponses.results
+    },
+    {
+      intent: "skills",
+      keys: [
+        "skill", "skills", "tools", "platform", "software",
+        "google ads", "meta ads", "tiktok ads", "analytics",
+        "ga4", "gtm", "seo", "automation", "crm"
+      ],
+      response: aiResponses.skills
+    },
+    {
+      intent: "cv",
+      keys: [
+        "cv", "resume", "download cv", "download resume"
+      ],
+      response: aiResponses.cv
+    },
+    {
+      intent: "contact",
+      keys: [
+        "contact", "email", "reach", "hire", "whatsapp",
+        "linkedin", "how to contact", "how to reach"
+      ],
+      response: aiResponses.contact
+    }
+  ];
+
+  for (let intent of intentMap) {
+    for (let key of intent.keys) {
+      if (text.includes(key)) {
+        lastAiIntent = intent.intent;
+        return intent.response;
+      }
+    }
   }
 
-  if (
-    text.includes("result") ||
-    text.includes("achievement") ||
-    text.includes("kpi") ||
-    text.includes("growth")
-  ) {
-    return aiResponses.results;
-  }
+  return `I can help with:
 
-  if (
-    text.includes("skill") ||
-    text.includes("tools") ||
-    text.includes("platform")
-  ) {
-    return aiResponses.skills;
-  }
+• Experience
+• Projects
+• Results
+• Skills
+• CV
+• Contact
 
-  if (text.includes("cv") || text.includes("resume")) {
-    return aiResponses.cv;
-  }
-
-  if (
-    text.includes("contact") ||
-    text.includes("email") ||
-    text.includes("whatsapp") ||
-    text.includes("linkedin")
-  ) {
-    return aiResponses.contact;
-  }
-
-  return "I can help with Kunalan’s experience, projects, results, skills, CV, or contact details. Try clicking one of the quick options above.";
+Try asking: "what results did he achieve?" or "what tools does he use?"`;
 }
 
 function sendAiMessage() {
@@ -589,9 +684,66 @@ function sendAiMessage() {
   addAiMessage(value, "user");
   aiChatInput.value = "";
 
+  if (aiSuggestionBox) {
+    aiSuggestionBox.classList.remove("show");
+    aiSuggestionBox.innerHTML = "";
+  }
+
   setTimeout(() => {
     addAiMessage(getAiResponse(value), "bot");
   }, 300);
+}
+
+const aiSuggestions = [
+  "What results did he achieve?",
+  "What projects has he done?",
+  "What tools does he use?",
+  "Can he manage Google Ads?",
+  "Tell me about automation",
+  "How can I contact him?",
+  "Download CV"
+];
+
+function updateAiSuggestions(value) {
+  if (!aiSuggestionBox) return;
+
+  const text = value.toLowerCase().trim();
+
+  if (!text) {
+    aiSuggestionBox.classList.remove("show");
+    aiSuggestionBox.innerHTML = "";
+    return;
+  }
+
+  const filtered = aiSuggestions.filter((suggestion) =>
+    suggestion.toLowerCase().includes(text) ||
+    (text.includes("ad") && suggestion.toLowerCase().includes("google ads")) ||
+    (text.includes("tool") && suggestion.toLowerCase().includes("tools")) ||
+    (text.includes("contact") && suggestion.toLowerCase().includes("contact")) ||
+    (text.includes("cv") && suggestion.toLowerCase().includes("cv"))
+  );
+
+  aiSuggestionBox.innerHTML = "";
+
+  filtered.slice(0, 3).forEach((suggestion) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.innerText = suggestion;
+
+    button.addEventListener("click", () => {
+      aiChatInput.value = suggestion;
+      aiSuggestionBox.classList.remove("show");
+      sendAiMessage();
+    });
+
+    aiSuggestionBox.appendChild(button);
+  });
+
+  if (filtered.length > 0) {
+    aiSuggestionBox.classList.add("show");
+  } else {
+    aiSuggestionBox.classList.remove("show");
+  }
 }
 
 if (aiChatToggle && aiChatPanel) {
@@ -618,6 +770,8 @@ document.querySelectorAll("[data-ai]").forEach((button) => {
     const key = button.getAttribute("data-ai");
     const label = button.innerText;
 
+    lastAiIntent = key;
+
     addAiMessage(label, "user");
 
     setTimeout(() => {
@@ -635,6 +789,10 @@ if (aiChatInput) {
     if (event.key === "Enter") {
       sendAiMessage();
     }
+  });
+
+  aiChatInput.addEventListener("input", () => {
+    updateAiSuggestions(aiChatInput.value);
   });
 }
 
