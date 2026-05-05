@@ -906,7 +906,20 @@
 <!-- FLOATING AI CHATBOT -->
 <div class="ai-chat-widget" id="aiChatWidget">
   <button class="ai-chat-toggle" id="aiChatToggle" aria-label="Open AI Assistant">
-    <span class="ai-spark">✦</span>
+    <span class="ai-spark">
+      <svg viewBox="0 0 24 24" class="ai-spark-svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="aiSparkGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ffffff" />
+            <stop offset="35%" stop-color="#79d8ff" />
+            <stop offset="70%" stop-color="#7b8cff" />
+            <stop offset="100%" stop-color="#35ffcf" />
+          </linearGradient>
+        </defs>
+        <path d="M12 2 L14.5 9.5 L22 12 L14.5 14.5 L12 22 L9.5 14.5 L2 12 L9.5 9.5 Z"/>
+      </svg>
+    </span>
+
     <span class="ai-toggle-text">Ask AI</span>
   </button>
 
@@ -939,6 +952,8 @@
         <button data-ai="contact">Contact</button>
       </div>
     </div>
+
+    <div class="ai-suggestion-box" id="aiSuggestionBox"></div>
 
     <div class="ai-chat-footer">
       <input type="text" id="aiChatInput" placeholder="Type your question..." />
