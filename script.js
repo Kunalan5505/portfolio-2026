@@ -519,7 +519,7 @@ You can view more under the Projects section.`,
 
 [Email](mailto:kunalan517@gmail.com)
 [LinkedIn](https://www.linkedin.com/in/kunalan-mahendran/)
-[WhatsApp](https://wa.me/60123456789?text=Hi%20Kunalan%2C%20I%20found%20your%20portfolio%20and%20would%20like%20to%20connect.)`
+[WhatsApp](https://wa.me/60162507723?text=Hi%20Kunalan%2C%20I%20found%20your%20portfolio%20and%20would%20like%20to%20connect.)`
 };
 
 function addAiMessage(text, sender = "bot") {
@@ -580,11 +580,9 @@ function getFollowUpResponse(intent) {
 • Analytics dashboards and campaign reporting
 • SEO visibility and keyword performance tracking`,
 
-    cv:
-      aiResponses.cv,
+    cv: aiResponses.cv,
 
-    contact:
-      aiResponses.contact
+    contact: aiResponses.contact
   };
 
   return followUps[intent] || "Tell me which area you want to know more about: experience, projects, results, skills, CV, or contact.";
@@ -610,88 +608,32 @@ function getAiResponse(input) {
   const intentMap = [
     {
       intent: "experience",
-      keys: [
-        "experience",
-        "background",
-        "work",
-        "career",
-        "what does he do",
-        "who is",
-        "about him"
-      ],
+      keys: ["experience", "background", "work", "career", "what does he do", "who is", "about him"],
       response: aiResponses.experience
     },
     {
       intent: "projects",
-      keys: [
-        "project",
-        "projects",
-        "case study",
-        "portfolio",
-        "what has he built",
-        "what did he do"
-      ],
+      keys: ["project", "projects", "case study", "portfolio", "what has he built", "what did he do"],
       response: aiResponses.projects
     },
     {
       intent: "results",
-      keys: [
-        "result",
-        "results",
-        "achievement",
-        "performance",
-        "kpi",
-        "growth",
-        "roas",
-        "conversion",
-        "leads",
-        "cpl"
-      ],
+      keys: ["result", "results", "achievement", "performance", "kpi", "growth", "roas", "conversion", "leads", "cpl"],
       response: aiResponses.results
     },
     {
       intent: "skills",
-      keys: [
-        "skill",
-        "skills",
-        "tools",
-        "platform",
-        "software",
-        "google ads",
-        "meta ads",
-        "tiktok ads",
-        "linkedin ads",
-        "analytics",
-        "ga4",
-        "gtm",
-        "seo",
-        "automation",
-        "crm"
-      ],
+      keys: ["skill", "skills", "tools", "platform", "software", "google ads", "meta ads", "tiktok ads", "linkedin ads", "analytics", "ga4", "gtm", "seo", "automation", "crm"],
       response: aiResponses.skills
     },
     {
       intent: "cv",
-      keys: [
-        "cv",
-        "resume",
-        "download cv",
-        "download resume"
-      ],
+      keys: ["cv", "resume", "download cv", "download resume"],
       response: aiResponses.cv
     },
     {
       intent: "contact",
-      keys: [
-        "contact",
-        "email",
-        "reach",
-        "hire",
-        "whatsapp",
-        "linkedin",
-        "how to contact",
-        "how to reach"
-      ],
+      keys: ["contact", "email", "reach", "hire", "whatsapp", "linkedin", "how to contact", "how to reach"],
       response: aiResponses.contact
     }
   ];
@@ -818,7 +760,6 @@ document.querySelectorAll("[data-ai]").forEach((button) => {
     if (!aiResponses[key]) return;
 
     lastAiIntent = key;
-
     addAiMessage(label, "user");
 
     setTimeout(() => {
@@ -843,7 +784,6 @@ if (aiChatInput) {
   });
 }
 
-/* Prevent whole page scrolling when scrolling inside chatbot */
 if (aiChatBody) {
   aiChatBody.addEventListener(
     "wheel",
