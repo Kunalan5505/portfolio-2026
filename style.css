@@ -2606,6 +2606,8 @@ main {
   justify-content: center;
 
   flex-shrink: 0;
+
+  transform: translateY(2px); /* 🔥 THIS IS THE FIX */
 }
 
 .ai-spark-svg {
