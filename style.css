@@ -2876,3 +2876,18 @@ main {
     max-height: 310px;
   }
 }
+
+/* FIX MODAL CLOSE BUTTON CLICK ISSUE */
+
+.modal {
+  z-index: 5000 !important;
+}
+
+.modal-content {
+  position: relative;
+  z-index: 5001 !important;
+}
+
+.modal-close {
+  z-index: 5002 !important;
+}
