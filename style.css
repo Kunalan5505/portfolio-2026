@@ -2598,16 +2598,23 @@ main {
 }
 
 .ai-spark {
-  font-size: 2rem;
-  width: 1em;
-  height: 1em;
-  line-height: 1;
+  width: 28px;
+  height: 28px;
 
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   flex-shrink: 0;
-  transform: translateY(-1px);
+}
+
+.ai-spark-svg {
+  width: 100%;
+  height: 100%;
+  fill: url(#aiSparkGradient);
+  filter:
+    drop-shadow(0 0 6px rgba(121, 216, 255, 0.65))
+    drop-shadow(0 0 10px rgba(123, 140, 255, 0.35));
 }
 
 .ai-toggle-text {
@@ -2745,7 +2752,8 @@ main {
   gap: 8px;
 }
 
-.ai-quick-actions button {
+.ai-quick-actions button,
+.ai-suggestion-box button {
   padding: 9px 12px;
   border-radius: 999px;
   border: 1px solid rgba(255,255,255,0.12);
@@ -2757,9 +2765,26 @@ main {
   transition: 0.25s ease;
 }
 
-.ai-quick-actions button:hover {
+.ai-quick-actions button:hover,
+.ai-suggestion-box button:hover {
   background: linear-gradient(135deg, #9cecff, #8092ff);
   color: #081220;
+}
+
+.ai-suggestion-box {
+  padding: 0 14px 10px;
+  display: none;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ai-suggestion-box.show {
+  display: flex;
+}
+
+.ai-suggestion-box button {
+  font-size: 0.75rem;
+  padding: 8px 11px;
 }
 
 .ai-chat-footer {
@@ -2835,7 +2860,8 @@ main {
   }
 
   .ai-spark {
-    font-size: 1.8rem;
+    width: 26px;
+    height: 26px;
   }
 
   .ai-chat-panel {
