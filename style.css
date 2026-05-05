@@ -2598,8 +2598,8 @@ main {
 }
 
 .ai-spark {
-  width: 70px;
-  height: 70px;
+  width: 38px;
+  height: 38px;
 
   display: flex;
   align-items: center;
@@ -2862,8 +2862,8 @@ main {
   }
 
   .ai-spark {
-    width: 26px;
-    height: 26px;
+    width: 38px;
+    height: 38x;
   }
 
   .ai-chat-panel {
