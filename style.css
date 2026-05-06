@@ -2941,3 +2941,48 @@ main {
     padding: 12px 14px;
   }
 }
+
+
+/* =========================
+   MOBILE PERFORMANCE OPTIMIZATION
+========================= */
+
+@media (max-width: 768px) {
+  .glass {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
+  .bg-orb {
+    filter: blur(40px);
+    opacity: 0.5;
+  }
+
+  .hero-grid-overlay,
+  .premium-video-hero::before {
+    display: none;
+  }
+
+  .tools-track,
+  .managed-carousel-track {
+    animation-duration: 90s;
+  }
+
+  .impact-card:hover,
+  .impact-hero:hover,
+  .skill-premium-card:hover,
+  .managed-site-card:hover,
+  .testimonial-card:hover {
+    transform: none;
+  }
+}
+
+html,
+body {
+  overscroll-behavior-x: none;
+}
+
+.premium-slider,
+.ai-chat-body {
+  -webkit-overflow-scrolling: touch;
+}
